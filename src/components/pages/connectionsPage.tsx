@@ -2,6 +2,7 @@ import React from 'react';
 import Form from 'react-jsonschema-form'
 import formSchema from './schemas/connectionsPage.json';
 import './connectionsPage.scss';
+import connections from '../../../config/connections.json'
 
 export interface IConnectionPageProps {
 
@@ -56,6 +57,7 @@ export default class ConnectionPage extends React.Component<IConnectionPageProps
             <div className="app-connections-page">
                 <div className="app-connections-page-list bg-secondary p-2">
                     <h6>Connections</h6>
+                    
                     <ul>
                         <li>Connection 1</li>
                         <li>Connection 2</li>

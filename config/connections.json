@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Connection 1",
+        "connectionStr": "string"
+    },
+    {
+        "name": "Connection 2",
+        "connectionStr": "string"
+    },
+    {
+        "name": "Connection 3",
+        "connectionStr": "string"
+    },
+    {
+        "name": "Connection 4",
+        "connectionStr": "string"
+    },
+    {
+        "name": "Connection 5",
+        "connectionStr": "string"
+    },
+]

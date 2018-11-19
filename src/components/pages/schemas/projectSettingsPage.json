@@ -6,16 +6,22 @@
             "title": "Project Name",
             "type": "string"
         },
+        "description": {
+            "title": "Description",
+            "type": "string"
+        },
+        "tags": {
+            "title": "Tags",
+            "type": "string"
+        },
         "dataSource": {
             "title": "Data Source",
             "type": "string",
             "enum": [
-                "my-connection-1",
-                "my-connection-2"
+                
             ],
             "enumNames": [
-                "My Connection 1",
-                "My Connection 2"
+                
             ]
         },
         "exportFormat": {
@@ -30,14 +36,7 @@
                 "CNTK"
             ]
         },
-        "description": {
-            "title": "Description",
-            "type": "string"
-        },
-        "tags": {
-            "title": "Tags",
-            "type": "string"
-        },
+
         "imageSettings": {
 
         },
