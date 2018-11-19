@@ -1,7 +1,7 @@
 import IFileStorage from './fileStorage'
 
 export default class AzureBlobStorage implements IFileStorage {
-    writeFile(content, path){
+    writeFile(path, content){
         return null;
     }
 

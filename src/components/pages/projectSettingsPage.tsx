@@ -1,7 +1,8 @@
 import React from 'react';
 import Form from 'react-jsonschema-form'
-import formSchema from './schemas/projectSettingsPage.json';
+import formSchema from './schemas/projectSettingsPage.json'
 import uiSchema from './schemas/ui/projectSettingsPage.json'
+import LocalFileSystemProxy from '../../providers/storage/localFileSystem'
 
 export interface IProjectPageProps {
 
@@ -29,7 +30,7 @@ export default class ProjectSettingsPage extends React.Component<IProjectPagePro
     }
 
     onFormChange = (args) => {
-        
+        LocalFileSystemProxy.writeFile("","");
     };
 
     onFormSubmit = (args) => {
