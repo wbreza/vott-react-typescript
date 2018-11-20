@@ -9,7 +9,7 @@ export class LocalFileSystem implements IFileStorage {
     writeFile(sender, args) {
         return new Promise((resolve, reject) => {
             const filePath = path.join(process.cwd(), args.path);
-            fs.writeFile(filePath, args.content, function (error) {
+            fs.writeFile(filePath, JSON.stringify(args.content), function (error) {
                 if (error) {
                     reject(error);
                 }
