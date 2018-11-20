@@ -33,6 +33,10 @@ export function readFile(path: string) {
         IpcRendererProxy.send(actionType, payload)
             .then(() => {
                 dispatch({ type: actionType, value: payload });
+            }).catch(e => {
+                console.log(e);
+                console.log(payload);
+                console.log(actionType);
             });
     }
 }

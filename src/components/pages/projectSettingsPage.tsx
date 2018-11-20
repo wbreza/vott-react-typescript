@@ -48,6 +48,7 @@ export default class ProjectSettingsPage extends React.Component<IProjectPagePro
 
     writeFile = () => {
         this.props.actions.writeFile("test.json", { "contents": "hello" });
+        //console.log(this.props.actions);
     }
 
 
