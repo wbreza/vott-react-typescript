@@ -42,12 +42,12 @@ export default class ProjectSettingsPage extends React.Component<IProjectPagePro
         this.onFormSubmit = this.onFormSubmit.bind(this);
     }
 
-    readFile = () => {
-        this.props.actions.readFile("");
+    readFile = (path) => {
+        return this.props.actions.readFile(path);
     }
 
     writeFile = () => {
-        this.props.actions.writeFile("test.json", { "contents": "hello" });
+        return this.props.actions.writeFile("test.json", { "contents": "hello" });
         //console.log(this.props.actions);
     }
 
@@ -58,7 +58,8 @@ export default class ProjectSettingsPage extends React.Component<IProjectPagePro
 
     onFormSubmit = async (args) => {
         console.log("submitted");
-        this.writeFile();
+        this.readFile('./projectSettingsPage.tsx')
+            .then((result) => console.log(result));
     }
 
     async waitForPromise() {

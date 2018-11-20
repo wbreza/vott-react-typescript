@@ -14,9 +14,8 @@ export function writeFile(path: string, content: object) {
     const actionType = ActionTypes.WRITE_FILE;
 
     return (dispatch) => {
-        IpcRendererProxy.send(actionType, payload)
+        return IpcRendererProxy.send(actionType, payload)
             .then((result) => {
-                console.log(result);
                 dispatch({ type: actionType, value: payload });
             })
             .catch(err => {
@@ -30,7 +29,7 @@ export function readFile(path: string) {
     const actionType = ActionTypes.READ_FILE;
 
     return (dispatch) => {
-        IpcRendererProxy.send(actionType, payload)
+        return IpcRendererProxy.send(actionType, payload)
             .then(() => {
                 dispatch({ type: actionType, value: payload });
             }).catch(e => {

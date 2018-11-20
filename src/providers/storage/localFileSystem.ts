@@ -9,7 +9,7 @@ export class LocalFileSystem implements IFileStorage {
     writeFile(sender, args) {
         return new Promise((resolve, reject) => {
             const filePath = path.join(process.cwd(), args.path);
-            fs.writeFile(filePath, JSON.stringify(args.content), function (error) {
+            return fs.writeFile(filePath, JSON.stringify(args.content), function (error) {
                 if (error) {
                     reject(error);
                 }
@@ -20,11 +20,11 @@ export class LocalFileSystem implements IFileStorage {
 
     readFile(sender, args) {
         return new Promise((resolve, reject) => {
-            fs.readFile(args.path, function (error, data) {
+            return fs.readFile(args.path, function (error, data) {
                 if (error) {
                     reject(error);
                 }
-                resolve(data.toString());
+                resolve(data);
             });
         });
     }
