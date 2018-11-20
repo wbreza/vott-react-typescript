@@ -1,22 +1,18 @@
 import React from 'react';
 import Form from 'react-jsonschema-form'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 import formSchema from './schemas/projectSettingsPage.json'
 import uiSchema from './schemas/ui/projectSettingsPage.json'
 
 import * as fileActions from '../../actions/fileActions'
-import { bindActionCreators } from 'redux';
-import { connect } from 'http2';
+
 import ApplicationState, { IAppSettings } from '../../store/applicationState';
 
 
 export interface IProjectPageProps {
     actions: fileActions.IFileActions
-}
-
-export interface IProjectPageState {
-    formSchema: any,
-    formData: any
 }
 
 
@@ -26,9 +22,8 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-
 @connect(mapDispatchToProps)
-export default class ProjectSettingsPage extends React.Component<IProjectPageProps, IProjectPageState> {
+export default class ProjectSettingsPage extends React.Component<IProjectPageProps> {
     constructor(props) {
         super(props);
 
