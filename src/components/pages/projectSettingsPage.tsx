@@ -1,11 +1,17 @@
 import React from 'react';
 import Form from 'react-jsonschema-form'
+
 import formSchema from './schemas/projectSettingsPage.json'
 import uiSchema from './schemas/ui/projectSettingsPage.json'
-import LocalFileSystemProxy from '../../providers/storage/localFileSystem'
+
+import * as fileActions from '../../actions/fileActions'
+import { bindActionCreators } from 'redux';
+import { connect } from 'http2';
+import ApplicationState, { IAppSettings } from '../../store/applicationState';
+
 
 export interface IProjectPageProps {
-
+    actions: fileActions.IFileActions
 }
 
 export interface IProjectPageState {
@@ -13,9 +19,18 @@ export interface IProjectPageState {
     formData: any
 }
 
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: bindActionCreators(fileActions, dispatch)
+    };
+}
+
+
+@connect(mapDispatchToProps)
 export default class ProjectSettingsPage extends React.Component<IProjectPageProps, IProjectPageState> {
-    constructor(props, context) {
-        super(props, context);
+    constructor(props) {
+        super(props);
 
         this.state = {
             formSchema: {...formSchema},
@@ -25,22 +40,22 @@ export default class ProjectSettingsPage extends React.Component<IProjectPagePro
         this.onFormChange = this.onFormChange.bind(this);
         this.onFormSubmit = this.onFormSubmit.bind(this);
     }
-    componentDidMount = () => {
 
+    readFile = () => {
+        this.props.actions.readFile("");
     }
+
+    writeFile = () => {
+        this.props.actions.writeFile("",{})
+    }
+
 
     onFormChange = async (args) => {
         console.log("changed");
-        console.log("Form changed");
-        let fileSystem = new LocalFileSystemProxy();
-        await fileSystem.writeFile("","../../TESTFILE.json");
     };
 
     onFormSubmit = async (args) => {
         console.log("submitted");
-        console.log("Form submitted");
-        let fileSystem = new LocalFileSystemProxy();
-        await fileSystem.writeFile("","../../TESTFILE.json");
     }
 
     async waitForPromise(){
