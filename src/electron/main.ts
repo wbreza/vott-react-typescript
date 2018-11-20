@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
 import url from 'url';
 import { IpcMainProxy } from '../common/ipcMainProxy';
+import { LocalFileSystem } from '../providers/storage/localFileSystem'
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -31,9 +32,13 @@ function createWindow() {
         mainWindow = null
     });
 
+    var localFileSystem = new LocalFileSystem();
+
     ipcMainProxy = new IpcMainProxy(mainWindow);
     ipcMainProxy.register('RELOAD_APP', onReloadApp);
     ipcMainProxy.register('TOGGLE_DEV_TOOLS', onToggleDevTools);
+    ipcMainProxy.register('READ_FILE', localFileSystem.readFile);
+    ipcMainProxy.register('WRITE_FILE', localFileSystem.writeFile)
 }
 
 function onReloadApp() {

@@ -51,6 +51,7 @@ export default class ProjectSettingsPage extends React.Component<IProjectPagePro
 
     onFormSubmit = async (args) => {
         console.log("submitted");
+        this.writeFile();
     }
 
     async waitForPromise(){

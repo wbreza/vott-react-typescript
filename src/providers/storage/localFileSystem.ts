@@ -2,7 +2,8 @@ import IFileStorage from './fileStorage'
 import fs from 'fs'
 import { isBuffer } from 'util';
 
-export default class LocalFileSystemProxy implements IFileStorage {
+export class LocalFileSystem implements IFileStorage {
+    constructor(){}
     
     writeFile(content, path){
         return new Promise((resolve, reject) => {
