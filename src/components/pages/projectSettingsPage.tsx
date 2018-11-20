@@ -34,7 +34,7 @@ export default class ProjectSettingsPage extends React.Component<IProjectPagePro
         super(props);
 
         this.state = {
-            formSchema: {...formSchema},
+            formSchema: { ...formSchema },
             formData: {}
         }
 
@@ -47,7 +47,7 @@ export default class ProjectSettingsPage extends React.Component<IProjectPagePro
     }
 
     writeFile = () => {
-        this.props.actions.writeFile("test.json",{"contents": "hello"})
+        this.props.actions.writeFile("test.json", { "contents": "hello" });
     }
 
 
@@ -60,16 +60,16 @@ export default class ProjectSettingsPage extends React.Component<IProjectPagePro
         this.writeFile();
     }
 
-    async waitForPromise(){
+    async waitForPromise() {
 
     }
-    
+
     render() {
         return (
-            <Form schema={formSchema} 
-            uiSchema={uiSchema}
-            onSubmit={this.onFormSubmit}
-            onChange={this.onFormChange}/>
+            <Form schema={formSchema}
+                uiSchema={uiSchema}
+                onSubmit={this.onFormSubmit}
+                onChange={this.onFormChange} />
         );
     }
 }

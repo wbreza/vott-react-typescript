@@ -1,29 +1,31 @@
-import IFileStorage from './fileStorage'
-import fs from 'fs'
+import IFileStorage from './fileStorage';
+import fs from 'fs';
+import path from 'path';
 import { isBuffer } from 'util';
 
 export class LocalFileSystem implements IFileStorage {
-    constructor(){}
-    
-    writeFile(content, path){
+    constructor() { }
+
+    writeFile(sender, args) {
         return new Promise((resolve, reject) => {
-            fs.writeFile(path, content, function(error) {
-                if(error){
+            const filePath = path.join(process.cwd(), args.path);
+            fs.writeFile(filePath, args.content, function (error) {
+                if (error) {
                     reject(error);
                 }
-                resolve({message: "File created"});
-            })
-        })
+                resolve({ message: `File created @ ${filePath}` });
+            });
+        });
     }
 
-    readFile(path){
+    readFile(sender, args) {
         return new Promise((resolve, reject) => {
-            fs.readFile(path, function(error, data) {
-                if(error){
+            fs.readFile(args.path, function (error, data) {
+                if (error) {
                     reject(error);
                 }
                 resolve(data.toString());
-            })
-        })
+            });
+        });
     }
 }
