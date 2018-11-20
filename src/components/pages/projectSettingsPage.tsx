@@ -29,18 +29,30 @@ export default class ProjectSettingsPage extends React.Component<IProjectPagePro
 
     }
 
-    onFormChange = (args) => {
-        LocalFileSystemProxy.writeFile("","");
+    onFormChange = async (args) => {
+        console.log("changed");
+        console.log("Form changed");
+        let fileSystem = new LocalFileSystemProxy();
+        await fileSystem.writeFile("","../../TESTFILE.json");
     };
 
-    onFormSubmit = (args) => {
-        console.log(args);
+    onFormSubmit = async (args) => {
+        console.log("submitted");
+        console.log("Form submitted");
+        let fileSystem = new LocalFileSystemProxy();
+        await fileSystem.writeFile("","../../TESTFILE.json");
+    }
+
+    async waitForPromise(){
+
     }
     
     render() {
         return (
             <Form schema={formSchema} 
-            uiSchema={uiSchema}/>
+            uiSchema={uiSchema}
+            onSubmit={this.onFormSubmit}
+            onChange={this.onFormChange}/>
         );
     }
 }
