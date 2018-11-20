@@ -15,6 +15,12 @@ export interface IProjectPageProps {
     actions: fileActions.IFileActions
 }
 
+function mapStateToProps(state: ApplicationState) {
+    return {
+        appSettings: state.appSettings
+    };
+}
+
 
 function mapDispatchToProps(dispatch) {
     return {
@@ -22,7 +28,7 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-@connect(mapDispatchToProps)
+@connect(mapStateToProps, mapDispatchToProps)
 export default class ProjectSettingsPage extends React.Component<IProjectPageProps> {
     constructor(props) {
         super(props);
@@ -41,7 +47,7 @@ export default class ProjectSettingsPage extends React.Component<IProjectPagePro
     }
 
     writeFile = () => {
-        this.props.actions.writeFile("",{})
+        this.props.actions.writeFile("test.json",{"contents": "hello"})
     }
 
 
