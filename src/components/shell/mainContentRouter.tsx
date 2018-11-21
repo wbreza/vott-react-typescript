@@ -4,7 +4,7 @@ import HomePage from '../pages/homepage/homePage';
 import ActiveLearningPage from '../pages/activeLearningPage';
 import AppSettingsPage from '../pages/appSettingsPage';
 import ConnectionPage from '../pages/connections/connectionsPage';
-import EditorPage from '../pages/editorPage';
+import EditorPage from '../pages/editor/editorPage';
 import ExportPage from '../pages/exportPage';
 import ProjectSettingsPage from '../pages/projectSettingsPage';
 import ProfileSettingsPage from '../pages/profileSettingsPage';

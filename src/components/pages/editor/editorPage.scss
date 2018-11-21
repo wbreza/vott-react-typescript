@@ -1,0 +1,55 @@
+@import '../../../assets/sass/theme.scss';
+
+.app-editor {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+
+    .Resizer{
+        &.vertical{
+            min-width: 11px;
+            color: #fff;
+        }
+        &.Resizer.horizontal{
+            min-height: 11px;
+            color: #fff;
+        }
+    }
+
+    &-files {
+        overflow: scroll;
+        flex: 0 0 20vw;
+
+        ul {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            overflow: scroll;
+            
+            padding: 0;
+
+            li {
+                list-style-type: none;
+                text-align: center;
+
+                a {
+                    display: inline-block;
+
+                    &.active, &:hover {
+                        color: #fff;
+                        background-color: $lighter-2;
+                        text-decoration: none;
+                    }
+                }
+            }
+        }
+    }
+
+    &-canvas {
+        overflow: hidden;
+        min-width: 20vw;
+    }
+}
