@@ -9,7 +9,7 @@ const initialState: ApplicationState = {
         devToolsEnabled: false,
     },
     connections: sampleConnections,
-    recentProjects: sampeProjects,
+    recentProjects: null, //sampeProjects,
     currentProject: null
 };
 
@@ -40,8 +40,10 @@ function createSampleProjects(count: number = 5): IProject[] {
                 providerType: 'CVS',
                 providerOptions: {}
             },
-            connection: getRandomConnection(sampleConnections),
-            tags: createSampleTags()
+            sourceConnection: getRandomConnection(sampleConnections),
+            targetConnection: getRandomConnection(sampleConnections),
+            tags: createSampleTags(),
+            autoSave: true
         })
     }
 
