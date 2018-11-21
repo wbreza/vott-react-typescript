@@ -14,11 +14,13 @@ export interface IProject {
     name: string,
     description: string,
     tags: ITag[],
-    connection: IConnection,
-    exportFormat: IExportFormat
+    sourceConnection: IConnection,
+    targetConnection: IConnection,
+    exportFormat: IExportFormat,
+    autoSave: boolean
 }
 
-export interface ITag{
+export interface ITag {
     name: string,
     color: string
 }
