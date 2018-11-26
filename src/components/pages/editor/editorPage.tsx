@@ -10,10 +10,12 @@ import ApplicationState, { IProject } from '../../../store/applicationState';
 
 const path = require('path');
 
-const images = ["https://upload.wikimedia.org/wikipedia/commons/7/7a/Basketball.png",
-"https://i0.wp.com/sterlingathletics.com/wp-content/uploads/2015/10/Traditional-Hand-Sewn-Soccer-Ball.png",
-"https://bloximages.newyork1.vip.townnews.com/pilotonline.com/content/tncms/assets/v3/editorial/c/d5/cd5dde92-1b18-5c2a-a624-a9752297ed3f/57467adbdc1dc.image.jpg",
-"https://images-na.ssl-images-amazon.com/images/I/71%2ByQUGOR4L._SX355_.jpg"]
+const images = ["https://cdn.audubon.org/cdn/farfuture/87-xE-_wwdnLv3l-jovUT1As8spveWAZlngLSVvakBw/mtime:1527627062/sites/default/files/styles/hero_image/public/web_groombaltimoreoriole-and-a-male-red-breasted-grosbeak.jpg",
+"https://thumbs-prod.si-cdn.com/ls5wKFfkIvwk7H95v9DQo0Vv2gY=/800x600/filters:no_upscale()/https://public-media.smithsonianmag.com/filer/54/10/5410da58-2295-4e3a-a847-fecd41cdcdd9/scarlet_tanager.jpg",
+"https://thebukitbrownexperience.files.wordpress.com/2012/06/birds-of-paradise.jpg",
+"http://en.bcdn.biz/images/emails_source/3a890069-edfb-4ceb-ab29-9a1b6fb206cf.jpg"]
+
+const tags = ["finch","swallow","other"]
 
 const items = images.map((image,index)=> {return{id: index, image: image}})
 
@@ -21,7 +23,7 @@ interface ExportpageProps {
     currentProejct: IProject;
 }
 interface ExportpageState {
-    project: IProject
+    // project: IProject
     currentImage: string
 }
 
@@ -48,14 +50,12 @@ export default class EditorPage extends React.Component<ExportpageProps,Exportpa
         super(props, context);
 
         this.state = {
-            project: this.props.currentProejct,
+            // project: this.props.currentProejct,
             currentImage: images[0]
         };
     }
 
-    changeImg = (img) => this.setState({ currentImage: img })
-
-    
+    changeImg = (img) => {this.setState({ currentImage: img })}
 
     render() {
         return (
@@ -93,13 +93,16 @@ export default class EditorPage extends React.Component<ExportpageProps,Exportpa
                                     </div>
                                     <div className="btn-group mr-2" role="group" aria-label="Second group">
                                         <div className="dropdown">
-                                            <button className="btn btn-secondary dropdown-toggle" id="dropdownMenu" type="button" data-toggle="dropdown">Filters
-                                            <span className="caret"></span></button>
-                                            <ul className="dropdown-menu" aria-labelledby="dropdownMenu">
-                                                <li><a href="#">Contrast</a></li>
-                                                <li><a href="#">Brightness</a></li>
-                                                <li><a href="#">Invert</a></li>
-                                            </ul>
+                                        <button type="button" className="btn btn-secondary dropdown-toggle dropdown-toggle-split" id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filters
+                                            <span className="sr-only"></span>
+                                        </button>
+                                        <div className="dropdown-menu" aria-labelledby="dropdownMenu">
+                                            <a className="dropdown-item" href="#">Action</a>
+                                            <a className="dropdown-item" href="#">Another action</a>
+                                            <a className="dropdown-item" href="#">Something else here</a>
+                                            <div className="dropdown-divider"></div>
+                                            <a className="dropdown-item" href="#">Separated link</a>
+                                        </div>
                                         </div>
                                     </div>
                                     </div>
@@ -107,7 +110,11 @@ export default class EditorPage extends React.Component<ExportpageProps,Exportpa
                             </div>
                             <img id="canvas" className="app-editor-canvas" src={this.state.currentImage}></img>
                         </div>
-                        <div>Tags:</div>
+                        <div>Tags: <br></br>
+                            {tags.map((tag,index)=>{
+                                return <button type="button" className="btn btn-secondary" key={"tag" + index}>{tag}</button>
+                            })}
+                        </div>
                     </SplitPane>
                     </div>
             </SplitPane>

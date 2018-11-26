@@ -7,7 +7,7 @@ export default function ImageItem({item, onClick}) {
                 <div className="card">
                     <img className="card-img-top" src={item.image} alt="Card image" onClick={() => onClick(item.image)}></img>
                     <div className="card-body">
-                        <p className="card-text">Image 1    Tags: 2</p>
+                        <p className="card-text">Image {item.id + 1}   Tags: 2</p>
                     </div>
                 </div>
             </a>
