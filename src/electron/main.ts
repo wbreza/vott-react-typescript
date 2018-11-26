@@ -1,7 +1,8 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
-import path from 'path';
+import { app, BrowserWindow, dialog } from 'electron';
+import path, { dirname } from 'path';
 import url from 'url';
 import { IpcMainProxy } from '../common/ipcMainProxy';
+import fs from 'fs';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -34,6 +35,9 @@ function createWindow() {
     ipcMainProxy = new IpcMainProxy(mainWindow);
     ipcMainProxy.register('RELOAD_APP', onReloadApp);
     ipcMainProxy.register('TOGGLE_DEV_TOOLS', onToggleDevTools);
+    ipcMainProxy.register('OPEN_LOCAL_FOLDER', onOpenLocalFolder);
+    ipcMainProxy.register('WRITE_LOCAL_FILE', onWriteLocalFile);
+    ipcMainProxy.register('DELETE_LOCAL_FILE', onDeleteLocalFile);
 }
 
 function onReloadApp() {
@@ -48,6 +52,52 @@ function onToggleDevTools(sender: any, show: boolean) {
         mainWindow.webContents.closeDevTools();
     }
 };
+
+function onOpenLocalFolder() {
+    return new Promise<string[]>((resolve, reject) => {
+        dialog.showOpenDialog(mainWindow, {
+            title: 'Select Folder',
+            buttonLabel: 'Choose Folder',
+            properties: ['openDirectory', 'createDirectory']
+        },
+            (filePaths) => {
+                resolve(filePaths)
+            });
+    });
+}
+
+function onWriteLocalFile(sender, args) {
+    return new Promise<void>((resolve, reject) => {
+        const dirName: fs.PathLike = path.dirname(args.path);
+        const exists = fs.existsSync(dirName);
+        if (!exists) {
+            fs.mkdirSync(dirName);
+        }
+
+        fs.writeFile(args.path, args.contents, (err) => {
+            if (err) {
+                return reject(err);
+            }
+
+            resolve();
+        })
+    });
+}
+
+function onDeleteLocalFile(sender, args) {
+    return new Promise<void>((resolve, reject) => {
+        const exists = fs.existsSync(args.path);
+        if (exists) {
+            fs.unlink(args.path, (err) => {
+                if (err) {
+                    return reject(err);
+                }
+
+                resolve();
+            });
+        }
+    })
+}
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
