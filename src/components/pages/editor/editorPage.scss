@@ -6,18 +6,22 @@
     flex-direction: row;
 
     .Resizer{
+        background: #fff;
+        // opacity: .2;
+        padding: 2px;
+        z-index: 1;
+        
         &.vertical{
             min-width: 11px;
             color: #fff;
         }
-        &.Resizer.horizontal{
+        &.horizontal{
             min-height: 11px;
             color: #fff;
         }
     }
 
     &-files {
-        overflow: scroll;
         flex: 0 0 20vw;
 
         ul {
@@ -27,7 +31,7 @@
             align-items: center;
             justify-content: center;
             margin: auto;
-            overflow: scroll;
+            // overflow: scroll;
             
             padding: 0;
 
@@ -50,6 +54,21 @@
 
     &-canvas {
         overflow: hidden;
-        min-width: 20vw;
+        // min-width: 20vw;
+        // min-height: 20vw;
+
+        &#canvas{
+            width: auto;
+            height: 100%;
+            padding-bottom: 50px;
+        }
+
+        .btn-toolbar{
+            background: #A9A9A9;
+        }
+
+        .container-fluid{
+            text-align: center;
+        }
     }
 }
