@@ -41,9 +41,13 @@ export default class TagsInput extends React.Component<TagsInputProps, TagsInput
         return tags.map(element => element.id).join();
     }
 
+    handleClick(arg){
+        arg.target.className = "color-0";
+    }
+
     addColor(tag){
         tag.color = "color-" + this.state.currentTagColor;
-        tag.text = <span className={tag.color}>{tag.id}</span>
+        tag.text = <span className={tag.color} onClick={this.handleClick}>{tag.id}</span>
     }
 
     handleAddition = (tag) => {
