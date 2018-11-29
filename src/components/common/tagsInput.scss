@@ -16,7 +16,8 @@ div.ReactTags__tagInput input.ReactTags__tagInputField:focus {
     font-size: 20px;
     width: 100%;
     border: 1px solid #eee;
-    padding: 0 4px;
+    padding: 5px;
+    margin: 5px 5px;
 }
 
 /* Styles for selected tags */
@@ -26,7 +27,7 @@ div.ReactTags__selected span.ReactTags__tag {
     font-size: 20px;
     display: inline-block;
     padding: 5px;
-    margin: 0 5px;
+    margin: 5px 5px;
     cursor: move;
     border-radius: 2px;
 }
@@ -59,65 +60,4 @@ div.ReactTags__suggestions li mark {
 div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
     background: #b7cfe0;
     cursor: pointer;
-}
-
-//White
-.color-0 {
-    color: #FFFFFF
-}
-//Silver
-.color-1 {
-    color: #C0C0C0
-}
-//Gray
-.color-2 {
-    color: #808080
-}
-//Red
-.color-3 {
-    color: #FF0000
-}
-//Maroon
-.color-4 {
-    color: #800000
-}
-//Yellow
-.color-5 {
-    color: #FFFF00
-}
-//Olive
-.color-6 {
-    color: #808000
-}
-//Lime
-.color-7 {
-    color: #00FF00
-}
-//Green
-.color-8 {
-    color: #008000
-}
-//Aqua
-.color-9 {
-    color: #00FFFF
-}
-//Teal
-.color-10 {
-    color: #008080
-}
-//Blue
-.color-11 {
-    color: #0000FF
-}
-//Navy
-.color-12 {
-    color: #000080
-}
-//Fuschia
-.color-13 {
-    color: #FF00FF
-}
-//Purple
-.color-14 {
-    color: #800080
 }
