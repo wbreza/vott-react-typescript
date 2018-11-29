@@ -1,6 +1,7 @@
 import React from 'react'
 import './tagsInput.scss'
 import { WithContext as ReactTags } from 'react-tag-input';
+import { randomIntInRange } from "../../common/utils"
 
 
 interface TagsInputProps {
@@ -10,6 +11,7 @@ interface TagsInputProps {
 
 interface TagsInputState {
     tags: any;
+    currentTagColor: number;
 }
 
 const KeyCodes = {
@@ -21,11 +23,13 @@ const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
 export default class TagsInput extends React.Component<TagsInputProps, TagsInputState> {
     
+    numberOfColors = 15;
+
     constructor(props) {
         super(props);
-
         this.state = {
-            tags: []
+            tags: [],
+            currentTagColor: randomIntInRange(0, this.numberOfColors)
         }
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAddition = this.handleAddition.bind(this);
@@ -37,14 +41,18 @@ export default class TagsInput extends React.Component<TagsInputProps, TagsInput
     }
 
     addHtml(tag){
-        var html = <span className="color-2">{tag.text}</span>
+        var color = "color-" + this.state.currentTagColor;
+        var html = <span className={color}>{tag.text}</span>
         tag.text = html;
     }
 
     handleAddition = (tag) => {
         this.addHtml(tag);
-        this.setState({
-            tags: [...this.state.tags, tag]
+        this.setState(prevState => {
+            return {
+                tags: [...this.state.tags, tag],
+                currentTagColor: (prevState.currentTagColor + 1) % this.numberOfColors
+            }            
         }, () => this.props.onChange(this.convertToFlatList(this.state.tags)));
     }
 
