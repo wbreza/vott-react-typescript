@@ -44,23 +44,27 @@ export default class TagsInput extends React.Component<TagsInputProps, TagsInput
 
     getEditedTag(){
         return {
+            id: "Test Tag",
             text: "Test Tag",
             color: "color-14"
         }
     }
 
-    getExistingTag(tagName){
-        return this.state.tags.find(tag => tag.id === tagName);
-    }
-
     handleTagClick(event){
         var tagName = event.currentTarget.innerText;
         var newTag = this.getEditedTag();
-        this.addHtml(newTag)
+        this.addHtml(newTag);
+        const { tags } = this.state;
 
-
-        //need to replace old tag with new in state
-        event.currentTarget.firstChild.className = "inline-block box color-" + newTag.color;
+        this.setState(prevState => {
+            return {
+                tags: [
+                    newTag,
+                    ...prevState.tags.filter(tag => tag.id !== tagName)
+                ],
+                currentTagColor: prevState.currentTagColor
+            } 
+        }, () => this.props.onChange(this.convertToFlatList(this.state.tags)));
     }
 
     addHtml(tag){
