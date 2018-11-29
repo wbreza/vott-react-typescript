@@ -20,6 +20,7 @@ const KeyCodes = {
 const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
 export default class TagsInput extends React.Component<TagsInputProps, TagsInputState> {
+    
     constructor(props) {
         super(props);
 
@@ -35,20 +36,26 @@ export default class TagsInput extends React.Component<TagsInputProps, TagsInput
         return tags.map(element => element.text).join();
     }
 
+    addHtml(tag){
+        var html = <span className="color-2">{tag.text}</span>
+        tag.text = html;
+    }
+
     handleAddition = (tag) => {
+        this.addHtml(tag);
         this.setState({
             tags: [...this.state.tags, tag]
         }, () => this.props.onChange(this.convertToFlatList(this.state.tags)));
     }
 
-    handleDelete = (i) => {
+    handleDelete (i){
         const { tags } = this.state;
         this.setState({
             tags: tags.filter((tag, index) => index !== i),
         }, () => this.props.onChange(this.convertToFlatList(this.state.tags)));
     }
 
-    handleDrag = (tag, currPos, newPos) => {
+    handleDrag(tag, currPos, newPos){
         const tags = [...this.state.tags];
         const newTags = tags.slice();
 

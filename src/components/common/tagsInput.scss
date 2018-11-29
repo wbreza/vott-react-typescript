@@ -11,9 +11,9 @@ div.ReactTags__tagInput {
 }
 div.ReactTags__tagInput input.ReactTags__tagInputField,
 div.ReactTags__tagInput input.ReactTags__tagInputField:focus {
-    height: 31px;
+    height: 40px;
     margin: 0;
-    font-size: 12px;
+    font-size: 20px;
     width: 100%;
     border: 1px solid #eee;
     padding: 0 4px;
@@ -23,7 +23,7 @@ div.ReactTags__tagInput input.ReactTags__tagInputField:focus {
 div.ReactTags__selected span.ReactTags__tag {
     border: 1px solid #ddd;
     background: #000000;
-    font-size: 12px;
+    font-size: 20px;
     display: inline-block;
     padding: 5px;
     margin: 0 5px;
@@ -59,4 +59,65 @@ div.ReactTags__suggestions li mark {
 div.ReactTags__suggestions ul li.ReactTags__activeSuggestion {
     background: #b7cfe0;
     cursor: pointer;
+}
+
+//White
+.color-1 {
+    color: #FFFFFF
+}
+//Silver
+.color-2 {
+    color: #C0C0C0
+}
+//Gray
+.color-3 {
+    color: #808080
+}
+//Red
+.color-4 {
+    color: #FF0000
+}
+//Maroon
+.color-5 {
+    color: #800000
+}
+//Yellow
+.color-6 {
+    color: #FFFF00
+}
+//Olive
+.color-7 {
+    color: #808000
+}
+//Lime
+.color-8 {
+    color: #00FF00
+}
+//Green
+.color-9 {
+    color: #008000
+}
+//Aqua
+.color-10 {
+    color: #00FFFF
+}
+//Teal
+.color-11 {
+    color: #008080
+}
+//Blue
+.color-12 {
+    color: #0000FF
+}
+//Navy
+.color-13 {
+    color: #000080
+}
+//Fuschia
+.color-14 {
+    color: #FF00FF
+}
+//Purple
+.color-15 {
+    color: #800080
 }
