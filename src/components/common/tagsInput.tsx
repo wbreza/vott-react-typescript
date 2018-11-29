@@ -35,23 +35,47 @@ export default class TagsInput extends React.Component<TagsInputProps, TagsInput
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAddition = this.handleAddition.bind(this);
         this.handleDrag = this.handleDrag.bind(this);
+        this.handleTagClick = this.handleTagClick.bind(this);
     }
 
     convertToFlatList(tags) {
         return tags.map(element => element.id).join();
     }
 
-    handleClick(arg){
-        arg.target.className = "color-0";
+    getEditedTag(){
+        return {
+            text: "Test Tag",
+            color: "color-14"
+        }
     }
 
-    addColor(tag){
-        tag.color = "color-" + this.state.currentTagColor;
-        tag.text = <span className={tag.color} onClick={this.handleClick}>{tag.id}</span>
+    getExistingTag(tagName){
+        return this.state.tags.find(tag => tag.id === tagName);
+    }
+
+    handleTagClick(event){
+        var tagName = event.currentTarget.innerText;
+        var newTag = this.getEditedTag();
+        this.addHtml(newTag)
+
+
+        //need to replace old tag with new in state
+        event.currentTarget.firstChild.className = "inline-block box color-" + newTag.color;
+    }
+
+    addHtml(tag){
+        tag.text = 
+            <div className="inline-block" onDoubleClick={this.handleTagClick}>
+                <div className={"inline-block box " + tag.color}></div>
+                <span className="tag-text">{tag.id}</span>
+            </div>
+        //<span >{tag.id} <span className={boxClass} onDoubleClick={this.handleClick}>    </span></span>
     }
 
     handleAddition = (tag) => {
-        this.addColor(tag);
+        tag.color = "color-" + this.state.currentTagColor;
+
+        this.addHtml(tag);
         this.setState(prevState => {
             return {
                 tags: [...this.state.tags, tag],
