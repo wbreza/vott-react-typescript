@@ -38,6 +38,7 @@ export interface IAppSettings {
  * @member targetConnectionId - Reference ID for the target connection
  * @member targetConnection - Full target connection details
  * @member exportFormat - Full export format definition
+ * @member assets - Map of assets within a project
  * @member autoSave - Whether or not the project will automatically save updates to the underlying target
  */
 export interface IProject {
@@ -51,6 +52,7 @@ export interface IProject {
     targetConnection: IConnection;
     exportFormat: IExportFormat;
     autoSave: boolean;
+    assets?: { id: string, IAsset };
 }
 
 /**
@@ -97,25 +99,33 @@ export interface IExportFormat {
 }
 
 /**
- * @name - Asset Metadata
- * @description - Format to store asset metadata for each asset within a project
+ * @name - Asset
+ * @description - Defines an asset within a VoTT project
  * @member id - Unique identifier for asset
  * @member type - Type of asset (Image, Video, etc)
  * @member name - Generated name for asset
- * @member path - Path to asset within data source
+ * @member path - Relative path to asset within the underlying data source
  * @member size - Size / dimensions of asset
- * @member regions - Array of regions defined on as asset
  * @member format - The asset format (jpg, png, mp4, etc)
- * @member timestamp - The timestamp of the asset typically used for video durations / frames
  */
-export interface IAssetMetadata {
+export interface IAsset {
     id: string;
     type: AssetType;
     name: string;
     path: string;
     size: ISize;
-    regions: [];
     format?: string;
+}
+
+/**
+ * @name - Asset Metadata
+ * @description - Format to store asset metadata for each asset within a project
+ * @member asset - References an asset within the project
+ * @member timestamp - The timestamp of the asset typically used for video durations / frames
+ */
+export interface IAssetMetadata {
+    asset: IAsset;
+    regions: [];
     timestamp?: string;
 }
 
