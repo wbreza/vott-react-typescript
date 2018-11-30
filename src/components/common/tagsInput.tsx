@@ -63,26 +63,16 @@ export default class TagsInput extends React.Component<TagsInputProps, TagsInput
 
     handleTagClick(event){
         var tagName = event.currentTarget.innerText;
-
-        // Todo get index of current tag
-
         var newTag = this.getEditedTag();
         this.addHtml(newTag);
-        const { tags } = this.state;
-
-        var index = this.getIndexOfTag(tagName);
-
-        
-
-
-
-
         this.setState(prevState => {
             return {
-                tags: [
-                    newTag,
-                    ...prevState.tags.filter(tag => tag.id !== tagName)
-                ],
+                tags: prevState.tags.map(tag => {
+                    if(tag.id === tagName){
+                        tag = newTag;
+                    }
+                    return tag;
+                }),    
                 currentTagColor: prevState.currentTagColor
             } 
         }, () => this.props.onChange(this.convertToFlatList(this.state.tags)));
@@ -111,8 +101,10 @@ export default class TagsInput extends React.Component<TagsInputProps, TagsInput
 
     handleDelete (i){
         const { tags } = this.state;
-        this.setState({
-            tags: tags.filter((tag, index) => index !== i),
+        this.setState(prevState => {
+            return {
+                tags: tags.filter((tag, index) => index !== i)
+            }
         }, () => this.props.onChange(this.convertToFlatList(this.state.tags)));
     }
 
