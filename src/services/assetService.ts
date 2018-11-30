@@ -6,8 +6,8 @@ export class AssetService {
 
     constructor(private project: IProject) {
         this.storageProvider = StorageProviderFactory.create(
-            project.sourceConnection.providerType,
-            project.sourceConnection.providerOptions,
+            this.project.sourceConnection.providerType,
+            this.project.sourceConnection.providerOptions,
         );
     }
 

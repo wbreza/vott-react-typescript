@@ -28,28 +28,15 @@ export default class ProjectForm extends React.Component<IProjectFormProps, IPro
         super(props, context);
 
         this.state = {
-            uiSchema: { ...uiSchema },
+            uiSchema: this.createUiSchema(),
             formSchema: { ...formSchema },
         };
     }
 
     public componentDidUpdate(prevProps) {
         if (prevProps.connections !== this.props.connections) {
-            const overrideUiSchema = {
-                sourceConnectionId: {
-                    "ui:options": {
-                        connections: this.props.connections,
-                    },
-                },
-                targetConnectionId: {
-                    "ui:options": {
-                        connections: this.props.connections,
-                    },
-                },
-            };
-
             this.setState({
-                uiSchema: deepmerge(uiSchema, overrideUiSchema),
+                uiSchema: this.createUiSchema(),
             });
         }
     }
@@ -64,5 +51,22 @@ export default class ProjectForm extends React.Component<IProjectFormProps, IPro
                 onSubmit={this.props.onSubmit}>
             </Form>
         );
+    }
+
+    private createUiSchema(): any {
+        const overrideUiSchema = {
+            sourceConnectionId: {
+                "ui:options": {
+                    connections: this.props.connections,
+                },
+            },
+            targetConnectionId: {
+                "ui:options": {
+                    connections: this.props.connections,
+                },
+            },
+        };
+
+        return deepmerge(uiSchema, overrideUiSchema);
     }
 }

@@ -8,7 +8,7 @@ import ApplicationState, { IProject, IConnection } from "../../../../redux/store
 import IConnectionActions, * as connectionActions from "../../../../redux/actions/connectionActions";
 
 interface IProjectSettingsPageProps extends RouteComponentProps, React.Props<ProjectSettingsPage> {
-    currentProject: IProject;
+    project: IProject;
     projectActions: IProjectActions;
     connectionActions: IConnectionActions;
     connections: IConnection[];
@@ -20,7 +20,7 @@ interface IProjectSettingsPageState {
 
 function mapStateToProps(state: ApplicationState) {
     return {
-        currentProject: state.currentProject,
+        project: state.currentProject,
         connections: state.connections,
     };
 }
@@ -38,25 +38,19 @@ export default class ProjectSettingsPage extends React.Component<IProjectSetting
         super(props, context);
 
         this.state = {
-            project: this.props.currentProject,
+            project: this.props.project,
         };
 
-        this.onFormSubmit = this.onFormSubmit.bind(this);
-    }
-
-    public async componentDidMount() {
         const projectId = this.props.match.params["projectId"];
-        if (!this.state.project && projectId) {
-            const currentProject = await this.props.projectActions.loadProject(projectId);
-
-            this.setState({
-                project: currentProject,
-            });
+        if (!this.props.project && projectId) {
+            this.props.projectActions.loadProject(projectId);
         }
 
         if (!this.props.connections) {
-            await this.props.connectionActions.loadConnections();
+            this.props.connectionActions.loadConnections();
         }
+
+        this.onFormSubmit = this.onFormSubmit.bind(this);
     }
 
     public render() {

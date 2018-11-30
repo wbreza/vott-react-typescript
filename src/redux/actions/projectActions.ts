@@ -1,6 +1,7 @@
 import ProjectService from "../../services/projectService";
 import { IProject } from "../store/applicationState";
 import * as ActionTypes from "./actionTypes";
+import { AssetService } from "../services/assetService";
 
 const projectService = new ProjectService();
 
@@ -10,6 +11,7 @@ export default interface IProjectActions {
     saveProject(project: IProject): Promise<IProject>;
     deleteProject(project: IProject): Promise<void>;
     closeProject();
+    loadAssets(project: IProject): Promise<string[]>;
 }
 
 export function loadProject(value: string | IProject) {
@@ -59,5 +61,16 @@ export function deleteProject(project: IProject) {
 export function closeProject() {
     return (dispatch) => {
         dispatch({ type: ActionTypes.CLOSE_PROJECT_SUCCESS });
+    };
+}
+
+export function loadAssets(project: IProject) {
+    return (dispatch) => {
+        const assetService = new AssetService(project);
+        const assets = assetService.getAssets();
+
+        dispatch({ type: ActionTypes.LOAD_PROJECT_ASSETS_SUCCESS, assets });
+
+        return assets;
     };
 }
