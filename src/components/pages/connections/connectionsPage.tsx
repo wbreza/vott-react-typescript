@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import ConnectionItem from "./connectionItem";
 import CondensedList from "../../common/condensedList";
-import ApplicationState, { IConnection } from "../../../store/applicationState.js";
+import { IConnection, IApplicationState as ApplicationState } from "../../../store/applicationState.js";
 import { RouteComponentProps } from "react-router-dom";
 import IConnectionActions, * as connectionActions from "../../../actions/connectionActions";
 import ConnectionForm from "./connectionForm";

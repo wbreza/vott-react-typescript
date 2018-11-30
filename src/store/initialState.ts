@@ -1,5 +1,5 @@
 import shortid from "shortid";
-import ApplicationState, { IConnection, IProject, ITag } from "./applicationState";
+import { IConnection, IProject, ITag, IApplicationState as ApplicationState } from "./applicationState";
 
 const sampleConnections = createSampleConnections();
 const sampeProjects = createSampleProjects();

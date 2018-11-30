@@ -4,7 +4,7 @@ import { bindActionCreators } from "redux";
 import { RouteComponentProps } from "react-router-dom";
 import ProjectForm from "./projectForm";
 import IProjectActions, * as projectActions from "../../../actions/projectActions";
-import ApplicationState, { IProject, IConnection } from "../../../store/applicationState";
+import { IProject, IConnection, IApplicationState as ApplicationState } from "../../../store/applicationState";
 import IConnectionActions, * as connectionActions from "../../../actions/connectionActions";
 
 interface IProjectSettingsPageProps extends RouteComponentProps, React.Props<ProjectSettingsPage> {

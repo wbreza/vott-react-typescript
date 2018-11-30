@@ -4,7 +4,7 @@ import App from "./App";
 import { Provider } from "react-redux";
 import createReduxStore from "./store/store";
 import initialState from "./store/initialState";
-import ApplicationState from "./store/applicationState";
+import { IApplicationState as ApplicationState } from "./store/applicationState";
 
 it("renders without crashing", () => {
     const defaultState: ApplicationState = initialState;

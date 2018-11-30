@@ -4,7 +4,7 @@ import { bindActionCreators } from "redux";
 import deepmerge from "deepmerge";
 import IApplicationActions, * as applicationActions from "../../../actions/applicationActions";
 import IConnectionActions, * as connectionActions from "../../../actions/connectionActions";
-import ApplicationState, { IAppSettings, IConnection } from "../../../store/applicationState";
+import { IAppSettings, IConnection, IApplicationState as ApplicationState } from "../../../store/applicationState";
 import Form from "react-jsonschema-form";
 import formSchema from "./appSettings.json";
 import uiSchema from "./appSettings.ui.json";

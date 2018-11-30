@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import Navbar from "./components/shell/navbar";
 import Sidebar from "./components/shell/sidebar";
 import MainContentRouter from "./components/shell/mainContentRouter";
-import ApplicationState, { IProject } from "./store/applicationState";
+import { IProject, IApplicationState as ApplicationState } from "./store/applicationState";
 import "./App.scss";
 
 interface IAppProps {

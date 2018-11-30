@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import "./homePage.scss";
 import IProjectActions, * as projectActions from "../../../actions/projectActions";
-import ApplicationState, { IProject } from "../../../store/applicationState";
+import { IProject, IApplicationState as ApplicationState } from "../../../store/applicationState";
 import CondensedList from "../../common/condensedList";
 import RecentProjectItem from "./recentProjectItem";
 import FilePicker from "../../common/filePicker";

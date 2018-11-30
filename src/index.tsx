@@ -9,7 +9,7 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import createReduxStore from "./store/store";
 import initialState from "./store/initialState";
-import ApplicationState from "./store/applicationState";
+import { IApplicationState as ApplicationState } from "./store/applicationState";
 import registerProviders from "./registerProviders";
 
 registerProviders();
