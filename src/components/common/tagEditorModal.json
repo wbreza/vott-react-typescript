@@ -1,0 +1,13 @@
+{
+    "type": "object",
+    "properties": {
+        "name": {
+            "title": "Tag Name",
+            "type": "string"
+        },
+        "color": {
+            "title": "Tag Color",
+            "type": "string"
+        }
+    }
+}
