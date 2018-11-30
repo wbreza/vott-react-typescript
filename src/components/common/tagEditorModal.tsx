@@ -1,5 +1,9 @@
 import React from 'react';
-import Modal from 'react-modal';
+import ReactModal from 'react-modal';
+import formSchema from './tagEditorModal.json'
+import Form from 'react-jsonschema-form'
+
+
 
 const customStyles = {
     content : {
@@ -14,11 +18,14 @@ const customStyles = {
 
 interface TagEditorModalProps {
     tag: any;
-    onSubmit: (value) => void;
+    showModal: boolean;
+    onCancel: (value) => void;
+    onOk: (value) => void;
 }
 
 interface TagEditorModalState {
     tag: any;
+    formData: any;
     isOpen: boolean;
 }
 
@@ -27,43 +34,44 @@ export class TagEditorModal extends React.Component<TagEditorModalProps, TagEdit
         super(props);
         this.state = {
             tag: props.tag,
+            formData: {},
             isOpen: false
         }
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleFormChange = this.handleFormChange.bind(this);
+        this.handleOk = this.handleOk.bind(this);
     }
 
-    openModal(){
-
+    handleFormChange(results) {
+        this.setState({
+            tag: {
+                id: results.formData.name,
+                color: results.formData.color
+            }
+        }, () => {})
     }
 
-    
-
-    closeModal(){
-
+    handleOk(){
+        this.props.onOk(this.state.tag);
     }
 
-    handleSubmit(){
-
-    }
 
     render() {
         return (
             <div>
-                <Modal
-                    isOpen={this.state.isOpen}
-                    onRequestClose={this.closeModal}
-                    style={customStyles}
-                    contentLabel="Example Modal"
-                />
-                <button onClick={this.closeModal}>close</button>
-                <div>I am a modal</div>
-                <form>
-                    <input />
-                    <button>tab navigation</button>
-                    <button>stays</button>
-                    <button>inside</button>
-                    <button>the modal</button>
-                </form>
+                <ReactModal 
+                    isOpen={this.props.showModal}>
+                    <Form
+                        schema={formSchema}
+                        onChange={this.handleFormChange}
+                        formData={{
+                            name: this.props.tag.id,
+                            color: this.props.tag.color
+                        }}>
+                        <button type="button" onClick={this.props.onCancel}>Close</button>
+                        <button type="button" onClick={this.handleOk}>OK</button>
+                        {/*Need a close modal button and ok button */}
+                    </Form>
+                </ReactModal>
             </div>
         )
     }
