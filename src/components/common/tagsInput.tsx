@@ -50,11 +50,32 @@ export default class TagsInput extends React.Component<TagsInputProps, TagsInput
         }
     }
 
+    getIndexOfTag(tagName){
+        const {tags} = this.state;
+        var i;
+        for(i = 0; i < tags.length; i++){
+            if (tags[i].id === tagName) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     handleTagClick(event){
         var tagName = event.currentTarget.innerText;
+
+        // Todo get index of current tag
+
         var newTag = this.getEditedTag();
         this.addHtml(newTag);
         const { tags } = this.state;
+
+        var index = this.getIndexOfTag(tagName);
+
+        
+
+
+
 
         this.setState(prevState => {
             return {
