@@ -39,13 +39,13 @@ export class LocalFileSystemProxy implements IStorageProvider {
         return IpcRendererProxy.send(`${PROXY_NAME}:writeBinary`, [filePath, contents]);
     }
 
-    public listFiles(folderName: string): Promise<string[]> {
-        const folderPath = [this.options.folderPath, folderName].join("\\");
+    public listFiles(folderName?: string): Promise<string[]> {
+        const folderPath = folderName ? [this.options.folderPath, folderName].join("\\") : this.options.folderPath;
         return IpcRendererProxy.send(`${PROXY_NAME}:listFiles`, [folderPath]);
     }
 
-    public listContainers(folderName: string): Promise<string[]> {
-        const folderPath = [this.options.folderPath, folderName].join("\\");
+    public listContainers(folderName?: string): Promise<string[]> {
+        const folderPath = folderName ? [this.options.folderPath, folderName].join("\\") : this.options.folderPath;
         return IpcRendererProxy.send(`${PROXY_NAME}:listContainers`, [folderPath]);
     }
 

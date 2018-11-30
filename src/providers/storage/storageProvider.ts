@@ -6,8 +6,8 @@ export interface IStorageProvider {
     writeText(filePath: string, contents: string): Promise<void>;
     writeBinary(filePath: string, contents: Buffer): Promise<void>;
 
-    listFiles(folderPath: string): Promise<string[]>;
-    listContainers(folderPath: string): Promise<string[]>;
+    listFiles(folderPath?: string): Promise<string[]>;
+    listContainers(folderPath?: string): Promise<string[]>;
 
     createContainer(folderPath: string): Promise<void>;
     deleteContainer(folderPath: string): Promise<void>;
