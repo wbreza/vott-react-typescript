@@ -19,7 +19,6 @@ interface TagsInputState {
     currentTagColor: number;
     selectedTag: any;
     showModal: boolean;
-    modalFormData: any;
 }
 
 const KeyCodes = {
@@ -38,13 +37,9 @@ export default class TagsInput extends React.Component<TagsInputProps, TagsInput
         this.state = {
             tags: [],
             currentTagColor: randomIntInRange(0, this.numberOfColors),
-            selectedTag: {
-                id: "No tag selected"
-            },
+            selectedTag: {},
             showModal: false,
-            modalFormData: {}
         }
-        this.handleCloseModal = this.handleCloseModal.bind(this);
         this.handleDelete = this.handleDelete.bind(this);
         this.handleAddition = this.handleAddition.bind(this);
         this.handleDrag = this.handleDrag.bind(this);
@@ -66,14 +61,15 @@ export default class TagsInput extends React.Component<TagsInputProps, TagsInput
     }
 
     private handleTagClick(event){
+        const tag = this.getTag(event.currentTarget.innerText)
         this.setState({
-            showModal: true,
-            selectedTag: this.getTag(event.currentTarget.innerText)
+            selectedTag: tag,
+            showModal: true
         })
+
     }
 
     private handleEditedTag(newTag){
-        debugger;
         this.addHtml(newTag);
         this.setState(prevState => {
             return {
@@ -100,10 +96,6 @@ export default class TagsInput extends React.Component<TagsInputProps, TagsInput
             () => this.props.onChange(this.convertToFlatList(this.state.tags)));
     }
 
-    
-    handleCloseModal(){
-        this.setState({showModal: false})
-    }
 
     private handleDelete (i){
         const { tags } = this.state;
@@ -149,7 +141,6 @@ export default class TagsInput extends React.Component<TagsInputProps, TagsInput
                 <TagEditorModal 
                     tag={this.state.selectedTag}
                     showModal={this.state.showModal}
-                    onCancel={this.handleCloseModal}
                     onOk={this.handleEditedTag}
                 />
             </div>

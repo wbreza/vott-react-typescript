@@ -19,7 +19,6 @@ const customStyles = {
 interface TagEditorModalProps {
     tag: any;
     showModal: boolean;
-    onCancel: (value) => void;
     onOk: (value) => void;
 }
 
@@ -30,6 +29,8 @@ interface TagEditorModalState {
 }
 
 export class TagEditorModal extends React.Component<TagEditorModalProps, TagEditorModalState> {
+    
+    
     constructor(props: TagEditorModalProps){
         super(props);
         this.state = {
@@ -39,6 +40,23 @@ export class TagEditorModal extends React.Component<TagEditorModalProps, TagEdit
         }
         this.handleFormChange = this.handleFormChange.bind(this);
         this.handleOk = this.handleOk.bind(this);
+        this.handleCancel = this.handleCancel.bind(this);
+    }
+
+    //component did update
+
+    // componentDidUpdate(prevProps) {
+    //     if (this.props.connection && prevProps.connection !== this.props.connection) {
+    //         this.bindForm(this.props.connection);
+    //     }
+    // }
+
+    componentDidUpdate(prevProps){
+        if(this.props.tag && prevProps.tag !== this.props.tag){
+            this.setState({
+                tag: this.props.tag
+            })
+        }
     }
 
     handleFormChange(results) {
@@ -54,6 +72,12 @@ export class TagEditorModal extends React.Component<TagEditorModalProps, TagEdit
         this.props.onOk(this.state.tag);
     }
 
+    handleCancel(){
+        this.setState({
+            isOpen: false
+        })
+    }
+
 
     render() {
         return (
@@ -64,10 +88,10 @@ export class TagEditorModal extends React.Component<TagEditorModalProps, TagEdit
                         schema={formSchema}
                         onChange={this.handleFormChange}
                         formData={{
-                            name: this.props.tag.id,
-                            color: this.props.tag.color
+                            name: this.state.tag.id,
+                            color: this.state.tag.color
                         }}>
-                        <button type="button" onClick={this.props.onCancel}>Close</button>
+                        <button type="button" onClick={this.handleCancel}>Close</button>
                         <button type="button" onClick={this.handleOk}>OK</button>
                         {/*Need a close modal button and ok button */}
                     </Form>
