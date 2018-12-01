@@ -10,7 +10,7 @@ export const reducer = (state: IProject[] = [], action: any) => {
             if (state) {
                 return [
                     { ...action.project },
-                ...state.filter((project) => project.id !== action.project.id),
+                    ...state.filter((project) => project.id !== action.project.id),
                 ];
             } else {
                 return [{ ...action.project }];

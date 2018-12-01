@@ -183,7 +183,8 @@ export interface IPoint {
  * @member Image - Specifies an asset as an image
  * @member Video - Specifies an asset as a video
  */
-enum AssetType {
+export enum AssetType {
+    Unknown = 0,
     Image = 1,
     Video = 2,
 }
@@ -195,7 +196,7 @@ enum AssetType {
  * @member Rectangle - Specifies a region as a rectangle
  * @member Polygon - Specifies a region as a multi-point polygon
  */
-enum RegionType {
+export enum RegionType {
     Square = "SQUARE",
     Rectangle = "RECTANGLE",
     Polygon = "POLYGON",

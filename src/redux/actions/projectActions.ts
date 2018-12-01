@@ -1,5 +1,5 @@
 import ProjectService from "../../services/projectService";
-import { IProject } from "../store/applicationState";
+import { IProject, IAsset } from "../store/applicationState";
 import * as ActionTypes from "./actionTypes";
 import { AssetService } from "../services/assetService";
 
@@ -11,7 +11,8 @@ export default interface IProjectActions {
     saveProject(project: IProject): Promise<IProject>;
     deleteProject(project: IProject): Promise<void>;
     closeProject();
-    loadAssets(project: IProject): Promise<string[]>;
+    loadAssets(project: IProject): Promise<IAsset[]>;
+    saveAsset(asset: IAsset): IAsset;
 }
 
 export function loadProject(value: string | IProject) {
@@ -45,7 +46,6 @@ export function saveProject(project: IProject) {
     return async (dispatch) => {
         project = await projectService.save(project);
         dispatch({ type: ActionTypes.SAVE_PROJECT_SUCCESS, project });
-        dispatch({ type: ActionTypes.LOAD_PROJECT_SUCCESS, project });
 
         return project;
     };
@@ -65,12 +65,19 @@ export function closeProject() {
 }
 
 export function loadAssets(project: IProject) {
-    return (dispatch) => {
+    return async (dispatch) => {
         const assetService = new AssetService(project);
-        const assets = assetService.getAssets();
+        const assets = await assetService.getAssets();
 
         dispatch({ type: ActionTypes.LOAD_PROJECT_ASSETS_SUCCESS, assets });
 
         return assets;
+    };
+}
+
+export function saveAsset(asset: IAsset) {
+    return (dispatch) => {
+        dispatch({ type: ActionTypes.SAVE_ASSET_SUCCESS, asset });
+        return asset;
     };
 }

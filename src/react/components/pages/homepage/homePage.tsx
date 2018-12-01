@@ -89,7 +89,7 @@ export default class HomePage extends React.Component<IHomepageProps> {
 
     private loadSelectedProject = (project: IProject) => {
         this.props.actions.loadProject(project).then(() => {
-            this.props.history.push(`/projects/${project.id}/settings`);
+            this.props.history.push(`/projects/${project.id}/edit`);
         });
     }
 
