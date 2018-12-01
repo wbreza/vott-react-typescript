@@ -1,13 +1,12 @@
 import React from 'react'
 import './tagsInput.scss'
 import './tagColors.scss'
+import tagColors from './tagColors.json'
 import { WithContext as ReactTags } from 'react-tag-input';
-import { randomIntInRange } from "../../common/utils"
-import { TagEditorModal } from './tagEditorModal'
-import ReactModal from 'react-modal';
-import modalFormSchema from './tagEditorModal.json'
+import { randomIntInRange } from "../../../common/utils"
+import { TagEditorModal } from './tagEditorModal/tagEditorModal'
 
-import Form from 'react-jsonschema-form'
+
 
 interface TagsInputProps {
     tags: any;
@@ -21,10 +20,7 @@ interface TagsInputState {
     showModal: boolean;
 }
 
-const tagColors = [
-    'white', 'silver', 'gray', 'red', 'maroon', 'yellow', 'olive',
-    'green', 'aqua', 'teal', 'blue', 'navy', 'fuschia', 'purple' 
-]
+
 
 const KeyCodes = {
     comma: 188,
@@ -49,6 +45,7 @@ export default class TagsInput extends React.Component<TagsInputProps, TagsInput
         this.handleDrag = this.handleDrag.bind(this);
         this.handleTagClick = this.handleTagClick.bind(this);
         this.handleEditedTag = this.handleEditedTag.bind(this);
+        this.handleCloseModal = this.handleCloseModal.bind(this);
     }
 
 
@@ -61,7 +58,7 @@ export default class TagsInput extends React.Component<TagsInputProps, TagsInput
                 tags: [...this.state.tags, tag],
                 currentTagColorIndex: (prevState.currentTagColorIndex + 1) % tagColors.length
             }            
-        }, () => this.props.onChange(this.convertToFlatList(this.state.tags)));
+        }, () => this.props.onChange(JSON.stringify(this.state.tags)));
     }
 
     private handleTagClick(event){
@@ -74,6 +71,10 @@ export default class TagsInput extends React.Component<TagsInputProps, TagsInput
     }
 
     private handleEditedTag(newTag){
+        if(newTag.id !== this.state.selectedTag.id && this.state.tags.some(t => t.id === newTag.id)){
+            //show error message and return
+            return;
+        }
         this.addHtml(newTag);
         this.setState(prevState => {
             return {
@@ -88,6 +89,12 @@ export default class TagsInput extends React.Component<TagsInputProps, TagsInput
         }, () => this.props.onChange(this.state.tags));
     }
 
+    handleCloseModal(){
+        this.setState({
+            showModal: false
+        })
+    }
+
     private handleDrag(tag, currPos, newPos){
         const tags = [...this.state.tags];
         const newTags = tags.slice();
@@ -97,7 +104,7 @@ export default class TagsInput extends React.Component<TagsInputProps, TagsInput
 
         // re-render
         this.setState({ tags: newTags },
-            () => this.props.onChange(this.convertToFlatList(this.state.tags)));
+            () => this.props.onChange(JSON.stringify(this.state.tags)));
     }
 
 
@@ -146,6 +153,7 @@ export default class TagsInput extends React.Component<TagsInputProps, TagsInput
                     tag={this.state.selectedTag}
                     showModal={this.state.showModal}
                     onOk={this.handleEditedTag}
+                    onCancel={this.handleCloseModal}
                 />
             </div>
         )

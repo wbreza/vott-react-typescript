@@ -2,7 +2,7 @@ import React from 'react';
 import formSchema from './projectForm.json';
 import uiSchema from './projectForm.ui.json';
 import Form from 'react-jsonschema-form'
-import TagsInput from '../../common/tagsInput'
+import TagsInput from '../../common/tagInput/tagsInput'
 import ConnectionPicker from '../../common/connectionPicker';
 import { IProject } from '../../../store/applicationState.js';
 

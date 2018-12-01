@@ -20,6 +20,7 @@ interface TagEditorModalProps {
     tag: any;
     showModal: boolean;
     onOk: (value) => void;
+    onCancel: (value) => void;
 }
 
 interface TagEditorModalState {
@@ -40,16 +41,7 @@ export class TagEditorModal extends React.Component<TagEditorModalProps, TagEdit
         }
         this.handleFormChange = this.handleFormChange.bind(this);
         this.handleOk = this.handleOk.bind(this);
-        this.handleCancel = this.handleCancel.bind(this);
     }
-
-    //component did update
-
-    // componentDidUpdate(prevProps) {
-    //     if (this.props.connection && prevProps.connection !== this.props.connection) {
-    //         this.bindForm(this.props.connection);
-    //     }
-    // }
 
     componentDidUpdate(prevProps){
         if(this.props.tag && prevProps.tag !== this.props.tag){
@@ -72,18 +64,14 @@ export class TagEditorModal extends React.Component<TagEditorModalProps, TagEdit
         this.props.onOk(this.state.tag);
     }
 
-    handleCancel(){
-        this.setState({
-            isOpen: false
-        })
-    }
-
-
     render() {
         return (
             <div>
                 <ReactModal 
-                    isOpen={this.props.showModal}>
+                    isOpen={this.props.showModal}
+                    style={customStyles}
+                    >
+                    
                     <Form
                         schema={formSchema}
                         onChange={this.handleFormChange}
@@ -91,7 +79,7 @@ export class TagEditorModal extends React.Component<TagEditorModalProps, TagEdit
                             name: this.state.tag.id,
                             color: this.state.tag.color
                         }}>
-                        <button type="button" onClick={this.handleCancel}>Close</button>
+                        <button type="button" onClick={this.props.onCancel}>Close</button>
                         <button type="button" onClick={this.handleOk}>OK</button>
                         {/*Need a close modal button and ok button */}
                     </Form>
