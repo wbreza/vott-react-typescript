@@ -16,10 +16,15 @@ interface TagsInputProps {
 
 interface TagsInputState {
     tags: any;
-    currentTagColor: number;
+    currentTagColorIndex: number;
     selectedTag: any;
     showModal: boolean;
 }
+
+const tagColors = [
+    'white', 'silver', 'gray', 'red', 'maroon', 'yellow', 'olive',
+    'green', 'aqua', 'teal', 'blue', 'navy', 'fuschia', 'purple' 
+]
 
 const KeyCodes = {
     comma: 188,
@@ -30,13 +35,12 @@ const delimiters = [KeyCodes.comma, KeyCodes.enter];
 
 export default class TagsInput extends React.Component<TagsInputProps, TagsInputState> {
     
-    numberOfColors = 15;
 
     constructor(props) {
         super(props);
         this.state = {
             tags: [],
-            currentTagColor: randomIntInRange(0, this.numberOfColors),
+            currentTagColorIndex: randomIntInRange(0, tagColors.length),
             selectedTag: {},
             showModal: false,
         }
@@ -49,13 +53,13 @@ export default class TagsInput extends React.Component<TagsInputProps, TagsInput
 
 
     private handleAddition = (tag) => {
-        tag.color = "color-" + this.state.currentTagColor;
+        tag.color = tagColors[this.state.currentTagColorIndex];
 
         this.addHtml(tag);
         this.setState(prevState => {
             return {
                 tags: [...this.state.tags, tag],
-                currentTagColor: (prevState.currentTagColor + 1) % this.numberOfColors
+                currentTagColorIndex: (prevState.currentTagColorIndex + 1) % tagColors.length
             }            
         }, () => this.props.onChange(this.convertToFlatList(this.state.tags)));
     }
