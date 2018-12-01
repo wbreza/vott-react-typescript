@@ -138,7 +138,6 @@ export default class TagsInput extends React.Component<TagsInputProps, TagsInput
 
     private normalize(tags) {
         var result = JSON.stringify(tags.map(element => (({ id, color }) => ({ id, color }))(element)))
-        debugger;
         return result;
     }
 
