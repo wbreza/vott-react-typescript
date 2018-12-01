@@ -43,6 +43,8 @@ export default class ProjectSettingsPage extends React.Component<ProjectSettings
     }
 
     onFormSubmit = (form) => {
+        var tags = JSON.parse(form.formData.tags);
+        debugger;
         this.setState({
             project: {
                 ...form.formData,

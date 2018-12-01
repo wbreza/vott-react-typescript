@@ -58,7 +58,7 @@ export default class TagsInput extends React.Component<TagsInputProps, TagsInput
                 tags: [...this.state.tags, tag],
                 currentTagColorIndex: (prevState.currentTagColorIndex + 1) % tagColors.length
             }            
-        }, () => this.props.onChange(JSON.stringify(this.state.tags)));
+        }, () => this.props.onChange(this.normalize(this.state.tags)));
     }
 
     private handleTagClick(event){
@@ -104,7 +104,7 @@ export default class TagsInput extends React.Component<TagsInputProps, TagsInput
 
         // re-render
         this.setState({ tags: newTags },
-            () => this.props.onChange(JSON.stringify(this.state.tags)));
+            () => this.props.onChange(this.normalize(this.state.tags)));
     }
 
 
@@ -136,8 +136,10 @@ export default class TagsInput extends React.Component<TagsInputProps, TagsInput
             </div>
     }
 
-    private convertToFlatList(tags) {
-        return tags.map(element => element.id).join();
+    private normalize(tags) {
+        var result = JSON.stringify(tags.map(element => (({ id, color }) => ({ id, color }))(element)))
+        debugger;
+        return result;
     }
 
     render() {
