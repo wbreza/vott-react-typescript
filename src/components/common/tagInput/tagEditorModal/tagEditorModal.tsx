@@ -1,83 +1,80 @@
-import React from 'react';
-import ReactModal from 'react-modal';
-import formSchema from './tagEditorModal.json'
-import Form from 'react-jsonschema-form'
-
-
+import React from "react";
+import ReactModal from "react-modal";
+import formSchema from "./tagEditorModal.json";
+import Form from "react-jsonschema-form";
 
 const customStyles = {
     content : {
-      top                   : '50%',
-      left                  : '50%',
-      right                 : 'auto',
-      bottom                : 'auto',
-      marginRight           : '-50%',
-      transform             : 'translate(-50%, -50%)'
-    }
+      top                   : "50%",
+      left                  : "50%",
+      right                 : "auto",
+      bottom                : "auto",
+      marginRight           : "-50%",
+      transform             : "translate(-50%, -50%)",
+    },
   };
 
-interface TagEditorModalProps {
+interface ITagEditorModalProps {
     tag: any;
     showModal: boolean;
     onOk: (value) => void;
     onCancel: (value) => void;
 }
 
-interface TagEditorModalState {
+interface ITagEditorModalState {
     tag: any;
     formData: any;
     isOpen: boolean;
 }
 
-export class TagEditorModal extends React.Component<TagEditorModalProps, TagEditorModalState> {
-    
-    
-    constructor(props: TagEditorModalProps){
+export class TagEditorModal extends React.Component<ITagEditorModalProps, ITagEditorModalState> {
+
+    constructor(props: ITagEditorModalProps) {
         super(props);
         this.state = {
             tag: props.tag,
             formData: {},
-            isOpen: false
-        }
+            isOpen: false,
+        };
         this.handleFormChange = this.handleFormChange.bind(this);
         this.handleOk = this.handleOk.bind(this);
     }
 
-    componentDidUpdate(prevProps){
-        if(this.props.tag && prevProps.tag !== this.props.tag){
+    public componentDidUpdate(prevProps) {
+        if (this.props.tag && prevProps.tag !== this.props.tag) {
             this.setState({
-                tag: this.props.tag
-            })
+                tag: this.props.tag,
+            });
         }
     }
 
-    handleFormChange(results) {
+    public handleFormChange(results) {
         this.setState({
             tag: {
                 id: results.formData.name,
-                color: results.formData.color
-            }
-        }, () => {})
+                color: results.formData.color,
+            },
+        });
     }
 
-    handleOk(){
+    public handleOk() {
         this.props.onOk(this.state.tag);
     }
 
-    render() {
+    public render() {
         return (
             <div>
-                <ReactModal 
+                <ReactModal
                     isOpen={this.props.showModal}
                     style={customStyles}
                     >
-                    
+
                     <Form
                         schema={formSchema}
                         onChange={this.handleFormChange}
                         formData={{
                             name: this.state.tag.id,
-                            color: this.state.tag.color
+                            color: this.state.tag.color,
                         }}>
                         <button type="button" onClick={this.props.onCancel}>Close</button>
                         <button type="button" onClick={this.handleOk}>OK</button>
@@ -85,6 +82,6 @@ export class TagEditorModal extends React.Component<TagEditorModalProps, TagEdit
                     </Form>
                 </ReactModal>
             </div>
-        )
+        );
     }
 }
