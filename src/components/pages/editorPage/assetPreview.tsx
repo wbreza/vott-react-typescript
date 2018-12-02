@@ -1,6 +1,5 @@
 import React from "react";
-import { IAsset, AssetType } from "../../store/applicationState";
-import { render } from "react-dom";
+import { IAsset, AssetType } from "../../../store/applicationState";
 
 interface IAssetPreviewProps {
     asset: IAsset;
@@ -26,7 +25,7 @@ export default class AssetPreview extends React.Component<IAssetPreviewProps, IA
         const { asset } = this.props;
 
         return (
-            <div>
+            <div className="asset-preview">
                 {!loaded &&
                     <div className="asset-loading">
                         <i className="fas fa-circle-notch fa-spin" />
@@ -48,7 +47,6 @@ export default class AssetPreview extends React.Component<IAssetPreviewProps, IA
     }
 
     private onAssetLoad() {
-        console.log("loaded");
         this.setState({
             loaded: true,
         });

@@ -2,10 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import _ from "lodash";
-import { IApplicationState, IProject, IAsset } from "../../store/applicationState";
-import IProjectActions, * as projectActions from "../../actions/projectActions";
+import { IApplicationState, IProject, IAsset } from "../../../store/applicationState";
+import IProjectActions, * as projectActions from "../../../actions/projectActions";
 import { RouteComponentProps } from "react-router-dom";
-import HtmlFileReader from "../../common/htmlFileReader";
+import HtmlFileReader from "../../../common/htmlFileReader";
 import "./editorPage.scss";
 import AssetPreview from "./assetPreview";
 
@@ -84,7 +84,7 @@ export default class EditorPage extends React.Component<IEditorPageProps, IEdito
                                         <AssetPreview asset={asset} />
                                     </div>
                                     <div className="asset-item-metadata">
-                                        <span className="asset-filename">{asset.name}</span>
+                                        <span className="asset-filename" title={asset.name}>{asset.name}</span>
                                         {asset.size &&
                                             <span className="float-right">
                                                 {asset.size.width} x {asset.size.height}
@@ -145,9 +145,7 @@ export default class EditorPage extends React.Component<IEditorPageProps, IEdito
             return;
         }
 
-        const assets = this.props.project.assets
-            ? _.values(this.props.project.assets)
-            : (await this.props.projectActions.loadAssets(this.props.project));
+        const assets = await this.props.projectActions.loadAssets(this.props.project);
 
         this.setState({
             assets,
