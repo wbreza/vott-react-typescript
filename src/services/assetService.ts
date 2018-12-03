@@ -1,28 +1,8 @@
-import { IProject, IAsset, AssetType } from "../store/applicationState";
-import { IStorageProvider, StorageProviderFactory } from "../providers/storage/storageProvider";
+import { IAsset, AssetType } from "../store/applicationState";
 import MD5 from "md5.js";
 
-export interface IAssetService {
-    getAssets(): Promise<IAsset[]>;
-}
-
-export class AssetService implements IAssetService {
-    private storageProvider: IStorageProvider;
-
-    constructor(private project: IProject) {
-        this.storageProvider = StorageProviderFactory.create(
-            this.project.sourceConnection.providerType,
-            this.project.sourceConnection.providerOptions,
-        );
-    }
-
-    public async getAssets(): Promise<IAsset[]> {
-        return (await this.storageProvider.listFiles())
-            .map((filePath) => this.getAsset(filePath))
-            .filter((asset) => asset.type !== AssetType.Unknown);
-    }
-
-    private getAsset(filePath: string): IAsset {
+export class AssetService {
+    public static createAssetFromFilePath(filePath: string): IAsset {
         const md5Hash = new MD5().update(filePath).digest("hex");
         const pathParts = filePath.indexOf("\\") > 0 ? filePath.split("\\") : filePath.split("/");
         const fileName = pathParts[pathParts.length - 1];
@@ -40,7 +20,7 @@ export class AssetService implements IAssetService {
         };
     }
 
-    private getAssetType(format: string): AssetType {
+    public static getAssetType(format: string): AssetType {
         switch (format.toLowerCase()) {
             case "gif":
             case "jpg":

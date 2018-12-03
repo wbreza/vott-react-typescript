@@ -1,5 +1,8 @@
 import { IpcRendererProxy } from "../../common/ipcRendererProxy";
 import { IStorageProvider } from "./storageProvider";
+import { IAssetProvider } from "./assetProvider";
+import { IAsset, AssetType } from "../../store/applicationState";
+import { AssetService } from "../../services/assetService";
 
 const PROXY_NAME = "LocalFileSystem";
 
@@ -7,7 +10,7 @@ export interface ILocalFileSystemProxyOptions {
     folderPath: string;
 }
 
-export class LocalFileSystemProxy implements IStorageProvider {
+export class LocalFileSystemProxy implements IStorageProvider, IAssetProvider {
     constructor(private options?: ILocalFileSystemProxyOptions) { }
 
     public selectContainer(): Promise<string> {
@@ -57,5 +60,10 @@ export class LocalFileSystemProxy implements IStorageProvider {
     public deleteContainer(folderName: string): Promise<void> {
         const folderPath = [this.options.folderPath, folderName].join("\\");
         return IpcRendererProxy.send(`${PROXY_NAME}:deleteContainer`, [folderPath]);
+    }
+
+    public getAssets(folderName?: string): Promise<IAsset[]> {
+        const folderPath = [this.options.folderPath, folderName].join("\\");
+        return IpcRendererProxy.send(`${PROXY_NAME}:getAssets`, [folderPath]);
     }
 }

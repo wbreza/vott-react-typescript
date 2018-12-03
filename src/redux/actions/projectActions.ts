@@ -1,7 +1,7 @@
 import ProjectService from "../../services/projectService";
 import { IProject, IAsset } from "../store/applicationState";
 import * as ActionTypes from "./actionTypes";
-import { AssetService } from "../services/assetService";
+import { AssetProviderFactory } from "../providers/storage/assetProvider";
 
 const projectService = new ProjectService();
 
@@ -66,8 +66,11 @@ export function closeProject() {
 
 export function loadAssets(project: IProject) {
     return async (dispatch) => {
-        const assetService = new AssetService(project);
-        const assets = await assetService.getAssets();
+        const assetProvider = AssetProviderFactory.create(
+            project.sourceConnection.providerType,
+            project.sourceConnection.providerOptions,
+        );
+        const assets = await assetProvider.getAssets();
 
         dispatch({ type: ActionTypes.LOAD_PROJECT_ASSETS_SUCCESS, assets });
 

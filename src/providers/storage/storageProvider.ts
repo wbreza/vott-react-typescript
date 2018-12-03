@@ -1,4 +1,6 @@
-export interface IStorageProvider {
+import { IAssetProvider } from "./assetProvider";
+
+export interface IStorageProvider extends IAssetProvider {
     readText(filePath: string): Promise<string>;
     readBinary(filePath: string): Promise<Buffer>;
     deleteFile(filePath: string): Promise<void>;
@@ -14,18 +16,22 @@ export interface IStorageProvider {
 }
 
 export class StorageProviderFactory {
+    public static get handlers() {
+        return { ...StorageProviderFactory.handlerRegistry };
+    }
 
     public static register(name: string, factory: (options?: any) => IStorageProvider) {
-        StorageProviderFactory.handlers[name] = factory;
+        StorageProviderFactory.handlerRegistry[name] = factory;
     }
 
     public static create(name: string, options?: any): IStorageProvider {
-        const handler = StorageProviderFactory.handlers[name];
+        const handler = StorageProviderFactory.handlerRegistry[name];
         if (!handler) {
             throw new Error(`No storage provider has been registered with name '${name}'`);
         }
 
         return handler(options);
     }
-    private static handlers: { [id: string]: (options?: any) => IStorageProvider } = {};
+
+    private static handlerRegistry: { [id: string]: (options?: any) => IStorageProvider } = {};
 }

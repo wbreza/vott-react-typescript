@@ -1,9 +1,11 @@
 import { IpcRendererProxy } from "../../common/ipcRendererProxy";
 import { LocalFileSystemProxy, ILocalFileSystemProxyOptions } from "./localFileSystemProxy";
 import { StorageProviderFactory } from "./storageProvider";
+import registerProviders from "../../registerProviders";
 
 describe("LocalFileSystem Proxy Storage Provider", () => {
     it("Provider is registered with the StorageProviderFactory", () => {
+        registerProviders();
         const storageProvider = StorageProviderFactory.create("localFileSystemProxy");
         expect(storageProvider).not.toBeNull();
     });
