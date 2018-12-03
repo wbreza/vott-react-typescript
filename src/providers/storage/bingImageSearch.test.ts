@@ -27,7 +27,8 @@ describe("Bing Image Search", () => {
     });
 
     it("calls the Bing image search API", async () => {
-        const expectedUrl = `https://api.cognitive.microsoft.com/bing/v7.0/images/search?q=Waterfalls&aspect=All`;
+        // tslint:disable-next-line:max-line-length
+        const expectedUrl = `https://api.cognitive.microsoft.com/bing/v7.0/images/search?q=${options.query}&aspect=${options.aspectRatio}`;
         const expectedHeaders = {
             headers: {
                 "Ocp-Apim-Subscription-Key": options.apiKey,
