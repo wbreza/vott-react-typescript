@@ -1,6 +1,6 @@
 import React from "react";
-import tagsInputStyle from "./tagsInput.scss";
-
+import "./tagsInput.scss";
+import "./tagColors.scss";
 import tagColors from "./tagColors.json";
 import { WithContext as ReactTags } from "react-tag-input";
 import { randomIntInRange } from "../../../common/utils";
