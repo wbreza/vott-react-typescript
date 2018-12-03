@@ -1,6 +1,5 @@
 import React from "react";
-import "./tagColors.scss";
-import "./tagsInput.scss";
+import tagsInputStyle from "./tagsInput.scss";
 
 import tagColors from "./tagColors.json";
 import { WithContext as ReactTags } from "react-tag-input";
