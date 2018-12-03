@@ -1,5 +1,7 @@
 import axios from "axios";
+import { IAsset } from "../../store/applicationState";
 import { IStorageProvider } from "./storageProvider";
+import { IAssetService } from "../../services/assetService";
 
 export interface IBingImageSearchOptions {
     apiKey: string;
@@ -14,7 +16,7 @@ export enum BingImageSearchAspectRatio {
     All = "All",
 }
 
-export class BingImageSearch implements IStorageProvider {
+export class BingImageSearch implements IAssetService, IStorageProvider {
     private static SEARCH_URL = "https://api.cognitive.microsoft.com/bing/v7.0/images/search";
 
     constructor(private options: IBingImageSearchOptions) { }
@@ -37,6 +39,10 @@ export class BingImageSearch implements IStorageProvider {
 
     public writeBinary(filePath: string, contents: Buffer): Promise<void> {
         throw new Error("Method not implemented.");
+    }
+
+    public async getAssets(): Promise<IAsset[]> {
+        return Promise.resolve([]);
     }
 
     public async listFiles(folderPath?: string): Promise<string[]> {

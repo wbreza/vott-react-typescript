@@ -15,7 +15,6 @@
     "canvastools": "github:kichinsky/CanvasTools-for-VOTT#master",
     "deepmerge": "^2.2.1",
     "electron": "^3.0.10",
-    "exif-parser": "^0.1.12",
     "lodash": "^4.17.11",
     "md5.js": "^1.3.5",
     "react": "^16.6.3",

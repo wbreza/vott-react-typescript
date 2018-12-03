@@ -2,7 +2,11 @@ import { IProject, IAsset, AssetType } from "../store/applicationState";
 import { IStorageProvider, StorageProviderFactory } from "../providers/storage/storageProvider";
 import MD5 from "md5.js";
 
-export class AssetService {
+export interface IAssetService {
+    getAssets(): Promise<IAsset[]>;
+}
+
+export class AssetService implements IAssetService {
     private storageProvider: IStorageProvider;
 
     constructor(private project: IProject) {
