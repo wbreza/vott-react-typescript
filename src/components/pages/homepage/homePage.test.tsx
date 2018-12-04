@@ -4,15 +4,17 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { mount } from "enzyme";
 import { IProject, ITag, IConnection, IExportFormat } from "../../../store/applicationState";
 import IProjectActions from "../../../actions/projectActions";
-// import { IConnection } from "../../store/applicationState";
 
 describe("Connection Picker Component", () => {
     let wrapper: any = null;
     let recentProjects: IProject[] = null;
+    let executor: () => {};
     let actions: IProjectActions;
     let source: IConnection;
     let tags: ITag[];
     let format: IExportFormat;
+    let history: any = null;
+    let location: any= null;
     let onChangeHandler: (value: any) => void;
 
     beforeEach(() => {
@@ -36,10 +38,10 @@ describe("Connection Picker Component", () => {
         ];
 
         const actions = {
-            loadProjects: () => {},
-            loadProject: () => { return new Promise<IProject>() },
-            saveProject: () => { return new Promise<IProject>() },
-            deleteProject: () => { return new Promise<void>() },
+            loadProjects: () => { return new Promise<IProject[]>(executor) },
+            loadProject: () => { return new Promise<IProject>(executor) },
+            saveProject: () => { return new Promise<IProject>(executor) },
+            deleteProject: () => { return new Promise<void>(executor) },
             closeProject: () => {},
         };
 
@@ -50,6 +52,8 @@ describe("Connection Picker Component", () => {
                 <HomePage
                     recentProjects={recentProjects}
                     actions={actions}
+                    history={history}
+                    location={location}
                 />
             </Router>,
         );
