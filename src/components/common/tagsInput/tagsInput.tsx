@@ -29,8 +29,11 @@ export default class TagsInput extends React.Component<ITagsInputProps, ITagsInp
 
     constructor(props) {
         super(props);
+        for (const tag of props.tags) {
+            this.addHtml(tag);
+        }
         this.state = {
-            tags: [],
+            tags: props.tags,
             currentTagColorIndex: randomIntInRange(0, tagColors.length),
             selectedTag: {},
             showModal: false,
@@ -57,7 +60,8 @@ export default class TagsInput extends React.Component<ITagsInputProps, ITagsInp
                     handleDelete={this.handleDelete}
                     handleAddition={this.handleAddition}
                     handleDrag={this.handleDrag}
-                    delimiters={delimiters} />
+                    delimiters={delimiters}
+                    ref="blah"/>
                 <TagEditorModal
                     tag={this.state.selectedTag}
                     showModal={this.state.showModal}
@@ -70,7 +74,6 @@ export default class TagsInput extends React.Component<ITagsInputProps, ITagsInp
 
     private handleAddition = (tag) => {
         tag.color = tagColors[this.state.currentTagColorIndex];
-
         this.addHtml(tag);
         this.setState((prevState) => {
             return {
@@ -143,7 +146,7 @@ export default class TagsInput extends React.Component<ITagsInputProps, ITagsInp
         tag.text =
             <div className="inline-block" onDoubleClick={this.handleTagClick}>
                 <div className={"inline-block box " + tag.color}></div>
-                <span className="tag-text">{tag.id}</span>
+                <span>{tag.id}</span>
             </div>;
     }
 
