@@ -1,5 +1,5 @@
 import { AssetService } from "./assetService";
-import { AssetType } from "../store/applicationState";
+import { AssetType } from "../models/applicationState";
 
 describe("Asset Service", () => {
     it("creates an asset from a file path", () => {

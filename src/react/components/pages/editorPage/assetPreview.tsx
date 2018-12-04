@@ -1,5 +1,5 @@
 import React from "react";
-import { IAsset, AssetType } from "../../../store/applicationState";
+import { IAsset, AssetType } from "../../../../models/applicationState";
 
 interface IAssetPreviewProps {
     asset: IAsset;

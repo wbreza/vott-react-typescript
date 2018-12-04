@@ -1,5 +1,5 @@
 import shortid from "shortid";
-import { IConnection } from "../redux/store/applicationState";
+import { IConnection } from "../models/applicationState";
 import Guard from "../common/guard";
 
 export interface IConnectionService {

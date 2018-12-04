@@ -1,4 +1,4 @@
-import { IAsset } from "../../store/applicationState";
+import { IAsset } from "../../models/applicationState";
 import Guard from "../../common/guard";
 
 export interface IAssetProvider {

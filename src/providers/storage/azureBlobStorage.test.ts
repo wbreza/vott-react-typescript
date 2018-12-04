@@ -2,6 +2,7 @@
 import AzureStorageBlob from "../../vendor/azurestoragejs/azure-storage.blob.js";
 import { AzureCloudStorageService, IAzureCloudStorageOptions } from "./azureBlobStorage";
 import { StorageProviderFactory, IStorageProvider } from "./storageProvider";
+import registerProviders from "../../registerProviders";
 
 const content = "This is the content";
 const containers = ["container1", "container2", "container3"];
@@ -27,6 +28,8 @@ describe("Azure blob functions", () => {
     const options: IAzureCloudStorageOptions = {
         connectionString: "fake connection string",
     };
+
+    registerProviders();
 
     describe("Initializing Connection", () => {
         it("Create blob service", () =>  {

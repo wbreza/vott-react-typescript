@@ -1,4 +1,4 @@
-import { IAsset, AssetType } from "../store/applicationState";
+import { IAsset, AssetType } from "../models/applicationState";
 import MD5 from "md5.js";
 import Guard from "../common/guard";
 
@@ -7,7 +7,7 @@ export class AssetService {
         Guard.emtpy(filePath);
 
         const md5Hash = new MD5().update(filePath).digest("hex");
-        const pathParts = filePath.indexOf("\\") > 0 ? filePath.split("\\") : filePath.split("/");
+        const pathParts = filePath.indexOf("\\") > -1 ? filePath.split("\\") : filePath.split("/");
         const fileName = pathParts[pathParts.length - 1];
         const fileNameParts = fileName.split(".");
         const assetFormat = fileNameParts[fileNameParts.length - 1];

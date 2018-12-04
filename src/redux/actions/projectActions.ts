@@ -1,7 +1,7 @@
 import ProjectService from "../../services/projectService";
-import { IProject, IAsset } from "../store/applicationState";
+import { IProject, IAsset } from "../../models/applicationState";
 import * as ActionTypes from "./actionTypes";
-import { AssetProviderFactory } from "../providers/storage/assetProvider";
+import { AssetProviderFactory } from "../../providers/storage/assetProvider";
 
 const projectService = new ProjectService();
 

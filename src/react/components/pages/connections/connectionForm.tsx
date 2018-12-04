@@ -2,7 +2,7 @@ import React from "react";
 import formSchema from "./connectionForm.json";
 import uiSchema from "./connectionForm.ui.json";
 import Form from "react-jsonschema-form";
-import { IConnection } from "../../../../redux/store/applicationState.js";
+import { IConnection } from "../../../../models/applicationState.js";
 import LocalFolderPicker from "../../common/localFolderPicker";
 
 interface IConnectionFormProps extends React.Props<ConnectionForm> {

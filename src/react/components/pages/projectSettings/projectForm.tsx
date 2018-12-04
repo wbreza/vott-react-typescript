@@ -5,7 +5,7 @@ import formSchema from "./projectForm.json";
 import uiSchema from "./projectForm.ui.json";
 import TagsInput from "../../common/tagsInput";
 import ConnectionPicker from "../../common/connectionPicker";
-import { IProject, IConnection } from "../../../../redux/store/applicationState.js";
+import { IProject, IConnection } from "../../../../models/applicationState.js";
 
 interface IProjectFormProps extends React.Props<ProjectForm> {
     project: IProject;

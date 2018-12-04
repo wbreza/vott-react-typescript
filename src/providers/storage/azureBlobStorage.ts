@@ -1,19 +1,20 @@
 import { IStorageProvider } from "./storageProvider";
 import AzureStorageBlob from "../../vendor/azurestoragejs/azure-storage.blob.js";
+import { IAsset } from "../../models/applicationState";
+import { AssetService } from "../../services/assetService";
 
 export interface IAzureCloudStorageOptions {
     connectionString: string;
+    containerName?: string;
+    createContainer?: boolean;
 }
 
 export class AzureCloudStorageService implements IStorageProvider {
-    public connectionString = null;
-
     constructor(private options?: IAzureCloudStorageOptions) {
-        this.connectionString = options.connectionString;
     }
 
     public getService() {
-        return AzureStorageBlob.createBlobService(this.connectionString);
+        return AzureStorageBlob.createBlobService(this.options.connectionString);
     }
 
     public readText(path: string) {
@@ -133,8 +134,17 @@ export class AzureCloudStorageService implements IStorageProvider {
         });
     }
 
+    public async getAssets(path?: string): Promise<IAsset[]> {
+        if (this.options.containerName) {
+            path = path ? [this.options.containerName, path].join("/") : this.options.containerName;
+        }
+        const files = await this.listFiles(path);
+        return files.map((blobPath) => AssetService.createAssetFromFilePath(blobPath));
+    }
+
     private getContainerName(path: string) {
-        return path.substring(0, path.indexOf("/"));
+        debugger;
+        return path.indexOf("/") > -1 ? path.substring(0, path.indexOf("/")) : path;
     }
 
     private getFileName(path: string) {

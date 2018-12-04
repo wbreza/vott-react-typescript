@@ -2,10 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import _ from "lodash";
-import { IApplicationState, IProject, IAsset } from "../../../store/applicationState";
-import IProjectActions, * as projectActions from "../../../actions/projectActions";
+import { IApplicationState, IProject, IAsset } from "../../../../models/applicationState";
+import IProjectActions, * as projectActions from "../../../../redux/actions/projectActions";
 import { RouteComponentProps } from "react-router-dom";
-import HtmlFileReader from "../../../common/htmlFileReader";
+import HtmlFileReader from "../../../../common/htmlFileReader";
 import "./editorPage.scss";
 import AssetPreview from "./assetPreview";
 

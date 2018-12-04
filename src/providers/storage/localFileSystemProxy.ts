@@ -1,7 +1,7 @@
 import { IpcRendererProxy } from "../../common/ipcRendererProxy";
 import { IStorageProvider } from "./storageProvider";
 import { IAssetProvider } from "./assetProvider";
-import { IAsset, AssetType } from "../../store/applicationState";
+import { IAsset, AssetType } from "../../models/applicationState";
 import { AssetService } from "../../services/assetService";
 import Guard from "../../common/guard";
 

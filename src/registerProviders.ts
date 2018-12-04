@@ -7,8 +7,10 @@ import { AssetProviderFactory } from "./providers/storage/assetProvider";
 export default function registerProviders() {
     // Storage Providers
     StorageProviderFactory.register("localFileSystemProxy", (options) => new LocalFileSystemProxy(options));
-    // Asset Providers
     StorageProviderFactory.register("azureBlobStorage", (options) => new AzureCloudStorageService(options));
+
+    // Asset Providers
+    AssetProviderFactory.register("azureBlobStorage", (options) => new AzureCloudStorageService(options));
     AssetProviderFactory.register("localFileSystemProxy", (options) => new LocalFileSystemProxy(options));
     AssetProviderFactory.register("bingImageSearch", (options) => new BingImageSearch(options));
 }

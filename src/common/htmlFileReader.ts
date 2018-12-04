@@ -1,4 +1,4 @@
-import { IAsset, AssetType } from "../store/applicationState";
+import { IAsset, AssetType } from "../models/applicationState";
 
 export default class HtmlFileReader {
     public static readAsText(file: File): Promise<string | ArrayBuffer> {

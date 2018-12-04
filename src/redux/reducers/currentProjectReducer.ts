@@ -1,6 +1,6 @@
 import _ from "lodash";
 import * as ActionTypes from "../actions/actionTypes";
-import { IProject } from "../store/applicationState";
+import { IProject } from "../../models/applicationState";
 import deepmerge from "deepmerge";
 
 export const reducer = (state: IProject = null, action: any) => {

@@ -1,6 +1,6 @@
 import shortid from "shortid";
 import { StorageProviderFactory } from "../providers/storage/storageProvider";
-import { IProject } from "../redux/store/applicationState";
+import { IProject } from "../models/applicationState";
 import Guard from "../common/guard";
 
 export interface IProjectService {

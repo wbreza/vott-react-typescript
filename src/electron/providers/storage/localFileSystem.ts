@@ -3,7 +3,7 @@ import fs from "fs";
 import path from "path";
 import rimraf from "rimraf";
 import { IStorageProvider } from "../../../providers/storage/storageProvider";
-import { IAsset, AssetType } from "../../../store/applicationState";
+import { IAsset, AssetType } from "../../../models/applicationState";
 import { AssetService } from "../../../services/assetService";
 
 export default class LocalFileSystem implements IStorageProvider {
