@@ -69,7 +69,7 @@ export default class ConnectionForm extends React.Component<IConnectionFormProps
 
     private bindForm(connection: IConnection, resetProviderOptions: boolean = false) {
         const providerType = connection ? connection.providerType : null;
-        let newFormSchema: any = this.state.formData;
+        let newFormSchema: any = this.state.formSchema;
         let newUiSchema: any = this.state.uiSchema;
 
         if (providerType) {
