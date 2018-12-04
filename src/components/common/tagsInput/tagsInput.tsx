@@ -29,11 +29,15 @@ export default class TagsInput extends React.Component<ITagsInputProps, ITagsInp
 
     constructor(props) {
         super(props);
-        for (const tag of props.tags) {
-            this.addHtml(tag);
+        let tagsCopy = [];
+        if (props.tags) {
+            tagsCopy = JSON.parse(JSON.stringify(props.tags));
+            for (const tag of tagsCopy) {
+                this.addHtml(tag);
+            }
         }
         this.state = {
-            tags: props.tags,
+            tags: tagsCopy,
             currentTagColorIndex: randomIntInRange(0, tagColors.length),
             selectedTag: {},
             showModal: false,
@@ -44,12 +48,8 @@ export default class TagsInput extends React.Component<ITagsInputProps, ITagsInp
         this.handleTagClick = this.handleTagClick.bind(this);
         this.handleEditedTag = this.handleEditedTag.bind(this);
         this.handleCloseModal = this.handleCloseModal.bind(this);
-    }
-
-    public handleCloseModal() {
-        this.setState({
-            showModal: false,
-        });
+        this.getTag = this.getTag.bind(this);
+        this.addHtml = this.addHtml.bind(this);
     }
 
     public render() {
@@ -72,27 +72,7 @@ export default class TagsInput extends React.Component<ITagsInputProps, ITagsInp
         );
     }
 
-    private handleAddition = (tag) => {
-        tag.color = tagColors[this.state.currentTagColorIndex];
-        this.addHtml(tag);
-        this.setState((prevState) => {
-            return {
-                tags: [...this.state.tags, tag],
-                currentTagColorIndex: (prevState.currentTagColorIndex + 1) % tagColors.length,
-            };
-        }, () => this.props.onChange(this.normalize(this.state.tags)));
-    }
-
-    private handleTagClick(event) {
-        const tag = this.getTag(event.currentTarget.innerText);
-        this.setState({
-            selectedTag: tag,
-            showModal: true,
-        });
-
-    }
-
-    private handleEditedTag(newTag) {
+    public handleEditedTag(newTag) {
         if (newTag.id !== this.state.selectedTag.id && this.state.tags.some((t) => t.id === newTag.id)) {
             // show error message and return
             return;
@@ -109,6 +89,35 @@ export default class TagsInput extends React.Component<ITagsInputProps, ITagsInp
                 showModal: false,
             };
         }, () => this.props.onChange(this.state.tags));
+    }
+
+    private handleCloseModal() {
+        this.setState({
+            showModal: false,
+        });
+    }
+
+    private handleAddition = (tag) => {
+        tag.color = tagColors[this.state.currentTagColorIndex];
+        this.addHtml(tag);
+        this.setState((prevState) => {
+            return {
+                tags: [...this.state.tags, tag],
+                currentTagColorIndex: (prevState.currentTagColorIndex + 1) % tagColors.length,
+            };
+        }, () => this.props.onChange(this.normalize(this.state.tags)));
+    }
+
+    private handleTagClick(event) {
+        let text = event.currentTarget.innerText;
+        if (text === undefined) {
+            text = event.target.innerText;
+        }
+        const tag = this.getTag(text);
+        this.setState({
+            selectedTag: tag,
+            showModal: true,
+        });
     }
 
     private handleDrag(tag, currPos, newPos) {
@@ -144,7 +153,7 @@ export default class TagsInput extends React.Component<ITagsInputProps, ITagsInp
 
     private addHtml(tag) {
         tag.text =
-            <div className="inline-block" onDoubleClick={this.handleTagClick}>
+            <div className="inline-block tagtext" onDoubleClick={(event) => this.handleTagClick(event)}>
                 <div className={"inline-block box " + tag.color}></div>
                 <span>{tag.id}</span>
             </div>;
@@ -154,5 +163,4 @@ export default class TagsInput extends React.Component<ITagsInputProps, ITagsInp
         const result = JSON.stringify(tags.map((element) => (({ id, color }) => ({ id, color }))(element)));
         return result;
     }
-
 }

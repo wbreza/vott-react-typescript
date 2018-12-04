@@ -66,6 +66,7 @@ export class TagEditorModal extends React.Component<ITagEditorModalProps, ITagEd
             <div>
                 <ReactModal
                     isOpen={this.props.showModal}
+                    ariaHideApp={false}
                     style={customStyles}
                     >
 
