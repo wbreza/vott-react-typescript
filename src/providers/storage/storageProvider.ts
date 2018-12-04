@@ -1,4 +1,5 @@
 import { IAssetProvider } from "./assetProvider";
+import Guard from "../../common/guard";
 
 export interface IStorageProvider extends IAssetProvider {
     readText(filePath: string): Promise<string>;
@@ -21,10 +22,15 @@ export class StorageProviderFactory {
     }
 
     public static register(name: string, factory: (options?: any) => IStorageProvider) {
+        Guard.emtpy(name);
+        Guard.null(factory);
+
         StorageProviderFactory.handlerRegistry[name] = factory;
     }
 
     public static create(name: string, options?: any): IStorageProvider {
+        Guard.emtpy(name);
+
         const handler = StorageProviderFactory.handlerRegistry[name];
         if (!handler) {
             throw new Error(`No storage provider has been registered with name '${name}'`);

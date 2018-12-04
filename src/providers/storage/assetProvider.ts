@@ -1,4 +1,5 @@
 import { IAsset } from "../../store/applicationState";
+import Guard from "../../common/guard";
 
 export interface IAssetProvider {
     getAssets(containerName?: string): Promise<IAsset[]>;
@@ -10,6 +11,9 @@ export class AssetProviderFactory {
     }
 
     public static register(name: string, factory: (options?: any) => IAssetProvider) {
+        Guard.emtpy(name);
+        Guard.null(factory);
+
         AssetProviderFactory.handlerRegistry[name] = factory;
     }
 

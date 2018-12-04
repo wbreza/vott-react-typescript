@@ -1,8 +1,11 @@
 import { IAsset, AssetType } from "../store/applicationState";
 import MD5 from "md5.js";
+import Guard from "../common/guard";
 
 export class AssetService {
     public static createAssetFromFilePath(filePath: string): IAsset {
+        Guard.emtpy(filePath);
+
         const md5Hash = new MD5().update(filePath).digest("hex");
         const pathParts = filePath.indexOf("\\") > 0 ? filePath.split("\\") : filePath.split("/");
         const fileName = pathParts[pathParts.length - 1];

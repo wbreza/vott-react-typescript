@@ -3,6 +3,7 @@ import { IStorageProvider } from "./storageProvider";
 import { IAssetProvider } from "./assetProvider";
 import { IAsset, AssetType } from "../../store/applicationState";
 import { AssetService } from "../../services/assetService";
+import Guard from "../../common/guard";
 
 const PROXY_NAME = "LocalFileSystem";
 
@@ -11,7 +12,9 @@ export interface ILocalFileSystemProxyOptions {
 }
 
 export class LocalFileSystemProxy implements IStorageProvider, IAssetProvider {
-    constructor(private options?: ILocalFileSystemProxyOptions) { }
+    constructor(private options?: ILocalFileSystemProxyOptions) {
+        Guard.null(options);
+    }
 
     public selectContainer(): Promise<string> {
         return IpcRendererProxy.send(`${PROXY_NAME}:selectContainer`);

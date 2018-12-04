@@ -2,6 +2,7 @@ import axios from "axios";
 import { IAsset, AssetType } from "../../store/applicationState";
 import { IAssetProvider } from "./assetProvider";
 import { AssetService } from "../../services/assetService";
+import Guard from "../../common/guard";
 
 export interface IBingImageSearchOptions {
     apiKey: string;
@@ -19,7 +20,9 @@ export enum BingImageSearchAspectRatio {
 export class BingImageSearch implements IAssetProvider {
     private static SEARCH_URL = "https://api.cognitive.microsoft.com/bing/v7.0/images/search";
 
-    constructor(private options: IBingImageSearchOptions) { }
+    constructor(private options: IBingImageSearchOptions) {
+        Guard.null(options);
+    }
 
     public async getAssets(): Promise<IAsset[]> {
         const query = {
