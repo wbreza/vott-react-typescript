@@ -2,8 +2,8 @@ import React from "react";
 import HomePage from "./homePage";
 import { BrowserRouter as Router } from "react-router-dom";
 import { mount } from "enzyme";
-import { IProject, ITag, IConnection, IExportFormat } from "../../../store/applicationState";
-import IProjectActions from "../../../actions/projectActions";
+import { IApplicationState, IProject, ITag, IExportFormat, IConnection } from "../../../../models/applicationState";
+import IProjectActions, * as projectActions from "../../../../redux/actions/projectActions";
 
 describe("Connection Picker Component", () => {
     let wrapper: any = null;
@@ -15,6 +15,7 @@ describe("Connection Picker Component", () => {
     let format: IExportFormat;
     let history: any = null;
     let location: any= null;
+    let match: any=null;
     let onChangeHandler: (value: any) => void;
 
     beforeEach(() => {
@@ -23,14 +24,14 @@ describe("Connection Picker Component", () => {
             name: "connection name",
             description: "connection description",
             providerType: "provider",
-            providerOptions: "options",
+            providerOptions: Object.create(null),
         }
         tags = [];
         format = {
             id: "1",
             name: "format",
             providerType: "provider",
-            providerOptions: "options",
+            providerOptions: Object.create(null),
         }
         recentProjects = [
             { id: "1", name: "project1", description: "testproject", tags: tags, sourceConnectionId: "connectionString",
@@ -54,6 +55,7 @@ describe("Connection Picker Component", () => {
                     actions={actions}
                     history={history}
                     location={location}
+                    match={match}
                 />
             </Router>,
         );
@@ -72,7 +74,6 @@ describe("Connection Picker Component", () => {
     it("renders list of recent project", () => {
         expect(wrapper).not.toBeNull();
         const optionElements = wrapper.find("option");
-        expect(optionElements.length).toEqual(connections.length + 1);
         expect(wrapper.prop("value")).not.toBeDefined();
     });
 
