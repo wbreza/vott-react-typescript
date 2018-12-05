@@ -105,7 +105,7 @@ export default class TagsInput extends React.Component<ITagsInputProps, ITagsInp
                 tags: [...this.state.tags, tag],
                 currentTagColorIndex: (prevState.currentTagColorIndex + 1) % tagColors.length,
             };
-        }, () => this.props.onChange(this.normalize(this.state.tags)));
+        }, () => this.props.onChange(this.normalize(this.state.tags))); //TODO do I need to normalize or not???
     }
 
     private handleTagClick(event) {

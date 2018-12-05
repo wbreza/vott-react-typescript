@@ -8,6 +8,7 @@ import { RouteComponentProps } from "react-router-dom";
 import HtmlFileReader from "../../../../common/htmlFileReader";
 import "./editorPage.scss";
 import AssetPreview from "./assetPreview";
+import Footer from "./footer"
 
 interface IEditorPageProps extends RouteComponentProps, React.Props<IEditorPageProps> {
     project: IProject;
@@ -48,6 +49,7 @@ export default class EditorPage extends React.Component<IEditorPageProps, IEdito
         }
 
         this.selectAsset = this.selectAsset.bind(this);
+        this.footerChange = this.footerChange.bind(this);
     }
 
     public async componentDidMount() {
@@ -113,11 +115,18 @@ export default class EditorPage extends React.Component<IEditorPageProps, IEdito
                         }
                     </div>
                     <div className="editor-page-content-footer">
-                        Footer
+                        <Footer
+                            tags={this.state.project.tags}
+                            onChange={this.footerChange}
+                            />
                     </div>
                 </div>
             </div>
         );
+    }
+
+    private footerChange(state) {
+        debugger;
     }
 
     private async selectAsset(asset: IAsset) {
