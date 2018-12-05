@@ -1,5 +1,5 @@
 import { IStorageProvider } from "./storageProvider";
-import AzureStorageBlob from "../../vendor/azurestoragejs/azure-storage.blob.js";
+import AzureStorageBlob from "../../vendor/azurestoragejs/azure-storage.blob.min.js";
 import { IAsset } from "../../models/applicationState";
 import { AssetService } from "../../services/assetService";
 
@@ -10,8 +10,7 @@ export interface IAzureCloudStorageOptions {
 }
 
 export class AzureCloudStorageService implements IStorageProvider {
-    constructor(private options?: IAzureCloudStorageOptions) {
-    }
+    constructor(private options?: IAzureCloudStorageOptions) {}
 
     public readText(path: string) {
         return new Promise<string>((resolve, reject) => {
@@ -34,10 +33,14 @@ export class AzureCloudStorageService implements IStorageProvider {
         return Buffer.from(text);
     }
 
-    public writeText(path: string, contents: string | Buffer) {
+    public async writeText(path: string, contents: string | Buffer) {
+        const containerName = this.getContainerName(path);
+        if(this.options.createContainer){
+            await this.createContainer(containerName);
+        }
         return new Promise<void>((resolve, reject) => {
             this.getService().createBlockBlobFromText(
-                this.getContainerName(path),
+                containerName,
                 this.getFileName(path),
                 contents,
                 (err, data) => {
@@ -143,6 +146,9 @@ export class AzureCloudStorageService implements IStorageProvider {
     }
 
     private getContainerName(path: string) {
+        if (this.options.containerName){
+            return this.options.containerName;
+        }
         return path.indexOf("/") > -1 ? path.substring(0, path.indexOf("/")) : path;
     }
 

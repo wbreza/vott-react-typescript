@@ -88,7 +88,7 @@ export default class TagsInput extends React.Component<ITagsInputProps, ITagsInp
                 }),
                 showModal: false,
             };
-        }, () => this.props.onChange(this.state.tags));
+        }, () => this.props.onChange(this.normalize(this.state.tags)));
     }
 
     private handleCloseModal() {
@@ -138,7 +138,7 @@ export default class TagsInput extends React.Component<ITagsInputProps, ITagsInp
             return {
                 tags: tags.filter((tag, index) => index !== i),
             };
-        }, () => this.props.onChange(this.state.tags));
+        }, () => this.props.onChange(this.normalize(this.state.tags)));
     }
 
     private getTag(tagName) {

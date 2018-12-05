@@ -1,4 +1,4 @@
-import AzureStorageBlob from "../../vendor/azurestoragejs/azure-storage.blob.js";
+import AzureStorageBlob from "../../vendor/azurestoragejs/azure-storage.blob.min.js";
 import { AzureCloudStorageService, IAzureCloudStorageOptions } from "./azureBlobStorage";
 import { StorageProviderFactory } from "./storageProvider";
 import registerProviders from "../../registerProviders";

@@ -37,7 +37,6 @@ function mapDispatchToProps(dispatch) {
 export default class EditorPage extends React.Component<IEditorPageProps, IEditorPageState> {
     constructor(props, context) {
         super(props, context);
-
         this.state = {
             project: this.props.project,
             assets: [],
@@ -47,7 +46,6 @@ export default class EditorPage extends React.Component<IEditorPageProps, IEdito
         if (!this.props.project && projectId) {
             this.props.projectActions.loadProject(projectId);
         }
-
         this.selectAsset = this.selectAsset.bind(this);
         this.footerChange = this.footerChange.bind(this);
     }
@@ -116,7 +114,7 @@ export default class EditorPage extends React.Component<IEditorPageProps, IEdito
                     </div>
                     <div className="editor-page-content-footer">
                         <Footer
-                            tags={this.state.project.tags}
+                            tags={(this.state.project && this.state.project.tags) ? this.state.project.tags : []}
                             onChange={this.footerChange}
                             />
                     </div>
