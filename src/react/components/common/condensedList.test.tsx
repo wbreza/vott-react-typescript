@@ -5,9 +5,9 @@ import { mount } from "enzyme";
 
 const TestComponent = ({ item, onClick, onDelete }) => {
     return (
-        <li className="test-component" onClick={(e) => onClick(e, item)}>
+        <li className="test-component" onClick={onClick}>
             <span>{item.name}</span>
-            <button onClick={(e) => onDelete(e, item)}>Delete</button>
+            <button onClick={onDelete}>Delete</button>
         </li>
     );
 };
@@ -74,17 +74,31 @@ describe("Condensed List Component", () => {
         expect(itemComonents.length).toEqual(items.length);
     });
 
-    it("Calls onClick handler when an item is clicked on", () => {
+    it("Calls onClick handler when the first item is clicked on", () => {
         const options = { onClick: jest.fn() };
         const wrapper = createList("Testing Component", items, options);
         wrapper.find(".test-component").first().simulate("click");
         expect(options.onClick).toBeCalledWith(items[0]);
     });
 
-    it("Calls onDelete handler when an item is deleted", () => {
+    it("Call onClick handler when the specified item is clicked on", () => {
+        const options = { onClick: jest.fn() };
+        const wrapper = createList("Testing Component", items, options);
+        wrapper.find(".test-component").at(1).simulate("click");
+        expect(options.onClick).toBeCalledWith(items[1]);
+    });
+
+    it("Calls onDelete handler when the first item is deleted", () => {
         const options = { onDelete: jest.fn() };
         const wrapper = createList("Testing Component", items, options);
         wrapper.find(".test-component button").first().simulate("click");
         expect(options.onDelete).toBeCalledWith(items[0]);
+    });
+
+    it("Calls onDelete handler when a specified item is deleted", () => {
+        const options = { onDelete: jest.fn() };
+        const wrapper = createList("Testing Component", items, options);
+        wrapper.find(".test-component button").at(1).simulate("click");
+        expect(options.onDelete).toBeCalledWith(items[1]);
     });
 });
