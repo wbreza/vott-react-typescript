@@ -13,10 +13,6 @@ export class AzureCloudStorageService implements IStorageProvider {
     constructor(private options?: IAzureCloudStorageOptions) {
     }
 
-    public getService() {
-        return AzureStorageBlob.createBlobService(this.options.connectionString);
-    }
-
     public readText(path: string) {
         return new Promise<string>((resolve, reject) => {
             this.getService().getBlobToText(
@@ -142,8 +138,11 @@ export class AzureCloudStorageService implements IStorageProvider {
         return files.map((blobPath) => AssetService.createAssetFromFilePath(blobPath));
     }
 
+    private getService() {
+        return AzureStorageBlob.createBlobService(this.options.connectionString);
+    }
+
     private getContainerName(path: string) {
-        debugger;
         return path.indexOf("/") > -1 ? path.substring(0, path.indexOf("/")) : path;
     }
 
