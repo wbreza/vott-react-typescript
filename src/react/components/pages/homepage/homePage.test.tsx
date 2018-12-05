@@ -61,14 +61,14 @@ describe("Connection Picker Component", () => {
         );
     });
 
-    it("renders a 'New Project' option", () => {
-        const firstOption = wrapper.find("option").first();
-        expect(firstOption.text()).toEqual("Select Connection");
+    it("renders a 'New Project' action", () => {
+        // const firstOption = wrapper.find("action").first();
+        // expect(firstOption.text()).toEqual("New Project");
     });
 
-    it("renders a 'Open Project' option", () => {
-        const firstOption = wrapper.find("option").first();
-        expect(firstOption.text()).toEqual("Select Connection");
+    it("renders a 'Open Project' action", () => {
+        // const firstOption = wrapper.find("option");
+        // expect(firstOption.text()).toEqual("Open Project");
     });
 
     it("renders list of recent project", () => {
