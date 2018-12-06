@@ -6,9 +6,13 @@ import { IProject, IAsset } from "../../../../models/applicationState";
 import IProjectActions from "../../../../redux/actions/projectActions";
 
 describe("Editor Page Component", () => {
+    let wrapper: any = null;
     let project: IProject = null;
     let projectActions: IProjectActions;
     const executor = () => { return; };
+    let history: any = null;
+    let location: any = null;
+    let match: any = null;
 
     beforeEach(() => {
         projectActions = {
@@ -25,13 +29,14 @@ describe("Editor Page Component", () => {
             projectActions,
         };
 
-        onChangeHandler = jest.fn();
-
         wrapper = mount(
             <Router>
                 <EditorPage
-                    project=""
-                    projectActions={options}
+                    project={project}
+                    projectActions={projectActions}
+                    history={history}
+                    location={location}
+                    match={match}
                 />
             </Router>,
         );
