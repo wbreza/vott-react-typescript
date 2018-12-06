@@ -8,6 +8,7 @@ import { mount } from "enzyme";
 import { Link } from "react-router-dom";
 import { IApplicationState, IProject, ITag, IExportFormat, IConnection } from "../../../../models/applicationState";
 import IProjectActions, * as projectActions from "../../../../redux/actions/projectActions";
+import CondensedList from "../../common/condensedList";
 
 describe("Connection Picker Component", () => {
     const defaultState: IApplicationState = initialState;
@@ -83,10 +84,14 @@ describe("Connection Picker Component", () => {
         expect(spy).toBeCalled();
     });
 
-    // it("renders list of recent project", () => {
-    //     expect(wrapper).not.toBeNull();
-    //     const optionElements = wrapper.find("option");
-    //     expect(wrapper.prop("value")).not.toBeDefined();
+    it("should render a list of recent projects", () => {
+        expect(wrapper).not.toBeNull();
+        if (wrapper.props.recentProjects && wrapper.props.recentProjects.length > 0) {
+            expect(wrapper.find(CondensedList).render().find("app-homepage-recent").exists());
+        }
+    });
+
+    // it("should render a file picker", () => {
     // });
 
     //     wrapper.find("select").simulate("change", { target: { value: connectionId } });
