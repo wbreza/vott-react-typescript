@@ -1,10 +1,9 @@
 import React from "react";
-import TagsInput from "./tagsInput";
-import { mount } from "enzyme";
-import TagColors from "./tagColors.json";
-import { ITag } from "../../../../models/applicationState";
+import Footer from "./footer";
+import {mount} from "enzyme";
+import TagColors from "../../common/tagsInput/tagColors.json";
 
-describe("Tags Input Component", () => {
+describe("Footer Component", () => {
     let wrapper: any = null;
     let onChangeHandler: (value: any) => void;
 
@@ -22,7 +21,7 @@ describe("Tags Input Component", () => {
     beforeEach(() => {
         onChangeHandler = jest.fn();
         wrapper = mount(
-            <TagsInput
+            <Footer
                 tags={originalTags}
                 onChange={onChangeHandler}/>,
         );
@@ -32,18 +31,9 @@ describe("Tags Input Component", () => {
         const stateTags = wrapper.state().tags;
         expect(stateTags).toHaveLength(originalTags.length);
         for (let i = 0; i < stateTags.length; i++) {
-            expect(stateTags[i].id).toEqual(originalTags[i].name);
+            expect(stateTags[i].name).toEqual(originalTags[i].name);
             expect(stateTags[i].color).toEqual(originalTags[i].color);
-            expect(stateTags[i].text).not.toBeNull();
         }
-    });
-
-    it("renders appropriate number of color boxes", () => {
-        expect(wrapper.find("div.inline-block.tag_color_box")).toHaveLength(2);
-    });
-
-    it("one text input field is available", () => {
-        expect(wrapper.find("input")).toHaveLength(1);
     });
 
     it("create a new tag from text box", () => {
@@ -52,7 +42,7 @@ describe("Tags Input Component", () => {
         wrapper.find("input").simulate("keyDown", {keyCode: 13});
         expect(onChangeHandler).toBeCalled();
         expect(wrapper.state().tags).toHaveLength(3);
-        expect(wrapper.state().tags[2].id).toEqual(newTagName);
+        expect(wrapper.state().tags[2].name).toEqual(newTagName);
         expect(TagColors).toContain(wrapper.state().tags[2].color);
     });
 
@@ -62,24 +52,8 @@ describe("Tags Input Component", () => {
             .last().simulate("click");
         expect(onChangeHandler).toBeCalled();
         expect(wrapper.state().tags).toHaveLength(1);
-        expect(wrapper.state().tags[0].id).toEqual(originalTags[0].name);
+        expect(wrapper.state().tags[0].name).toEqual(originalTags[0].name);
         expect(wrapper.state().tags[0].color).toEqual(originalTags[0].color);
-    });
-
-    it("double click tag opens modal", () => {
-        expect(wrapper.state().showModal).toBeFalsy();
-        wrapper.find("div.inline-block.tagtext")
-            .first()
-            .simulate("dblclick", { target: { innerText: originalTags[0].name}});
-        expect(wrapper.state().showModal).toBeTruthy();
-    });
-
-    it("double click tag sets selected tag", () => {
-        wrapper.find("div.inline-block.tagtext")
-            .first()
-            .simulate("dblclick", { target: { innerText: originalTags[0].name}});
-        expect(wrapper.state().selectedTag.id).toEqual(originalTags[0].name);
-        expect(wrapper.state().selectedTag.color).toEqual(originalTags[0].color);
     });
 
     it("clicking 'ok' in modal closes and calls onChangeHandler", () => {
@@ -89,7 +63,6 @@ describe("Tags Input Component", () => {
         wrapper.find("button")
             .last()
             .simulate("click");
-        expect(wrapper.state().showModal).toBeFalsy();
         expect(onChangeHandler).toBeCalled();
     });
 
@@ -100,7 +73,7 @@ describe("Tags Input Component", () => {
         wrapper.find("button")
             .first()
             .simulate("click");
-        expect(wrapper.state().showModal).toBeFalsy();
         expect(onChangeHandler).not.toBeCalled();
     });
+
 });
