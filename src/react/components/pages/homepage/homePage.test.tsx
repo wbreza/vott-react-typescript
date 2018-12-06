@@ -33,28 +33,27 @@ describe("Connection Picker Component", () => {
             name: "connection name",
             description: "connection description",
             providerType: "provider",
-            providerOptions: Object.create(null),
+            providerOptions: {},
         };
         format = {
             id: "1",
             name: "format",
             providerType: "provider",
-            providerOptions: Object.create(null),
+            providerOptions: {},
         };
         recentProjects = [
-            { id: "1", name: "project1", description: "testproject", tags,
-              sourceConnectionId: "connectionString", sourceConnection: source,
-              targetConnectionId: "1", targetConnection: source, exportFormat: format,
-              autoSave: true },
+            { id: "1",
+              name: "project1",
+              description: "testproject",
+              tags,
+              sourceConnectionId: "connectionString",
+              sourceConnection: source,
+              targetConnectionId: "1",
+              targetConnection: source,
+              exportFormat: format,
+              autoSave: true,
+            },
         ];
-
-        // const actions = {
-        //     loadProjects: () => new Promise<IProject[]>(executor),
-        //     loadProject: () => new Promise<IProject>(executor),
-        //     saveProject: () => new Promise<IProject>(executor),
-        //     deleteProject: () => new Promise<void>(executor),
-        //     closeProject: () => { return; },
-        // };
 
         onChangeHandler = jest.fn();
 
@@ -78,24 +77,22 @@ describe("Connection Picker Component", () => {
     });
 
     it("should call upload when 'Open Project' is clicked", () => {
-        const spy = jest.spyOn(wrapper, "update");
-        wrapper.update();
-        const openProject = wrapper.find("Link.p-5");
-        openProject.simulate("click");
+        const fileUpload = wrapper.find("a.file-upload");
+        const filePicker = wrapper.find(FilePicker);
+        const spy = jest.spyOn(filePicker.instance(), "upload");
+        fileUpload.simulate("click");
         expect(spy).toBeCalled();
     });
 
     it("should render a file picker", () => {
         expect(wrapper).not.toBeNull();
-        if (wrapper.props.recentProjects && wrapper.props.recentProjects.length > 0) {
-            expect(wrapper.find(FilePicker).render().find("app-homepage-main").exists());
-        }
+        expect(wrapper.find(FilePicker).exists()).toBeTruthy();
     });
 
     it("should render a list of recent projects", () => {
         expect(wrapper).not.toBeNull();
         if (wrapper.props.recentProjects && wrapper.props.recentProjects.length > 0) {
-            expect(wrapper.find(CondensedList).render().find("app-homepage-recent").exists());
+            expect(wrapper.find(CondensedList).exists()).toBeTruthy();
         }
     });
 });
