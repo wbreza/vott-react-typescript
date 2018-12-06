@@ -74,18 +74,19 @@ export default class TagsInput extends React.Component<ITagsInputProps, ITagsInp
         );
     }
 
-    public handleEditedTag(newTag: IReactTag): void {
-        if (newTag.id !== this.state.selectedTag.id && this.state.tags.some((t) => t.id === newTag.id)) {
+    public handleEditedTag(newTag: ITag): void {
+        const newReactTag = this.toReactTag(newTag);
+        if (newReactTag.id !== this.state.selectedTag.id && this.state.tags.some((t) => t.id === newReactTag.id)) {
             return;
         }
-        this.addHtml(newTag);
+        this.addHtml(newReactTag);
         this.setState((prevState) => {
             return {
-                tags: prevState.tags.map((tag) => {
-                    if (tag.id === prevState.selectedTag.id) {
-                        tag = newTag;
+                tags: prevState.tags.map((reactTag) => {
+                    if (reactTag.id === prevState.selectedTag.id) {
+                        reactTag = newReactTag;
                     }
-                    return tag;
+                    return reactTag;
                 }),
                 showModal: false,
             };
