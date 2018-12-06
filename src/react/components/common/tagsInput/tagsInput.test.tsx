@@ -1,34 +1,30 @@
 import React from "react";
 import TagsInput from "./tagsInput";
-import { BrowserRouter as Router } from "react-router-dom";
 import { mount } from "enzyme";
 import TagColors from "./tagColors.json";
-import { inspect } from "util";
+import { ITag } from "../../../../models/applicationState";
 
 describe("Tags Input Component", () => {
     let wrapper: any = null;
     let onChangeHandler: (value: any) => void;
-    let ref;
 
     const originalTags = [
         {
-            id: "Tag1",
+            name: "Tag1",
             color: "blue",
         },
         {
-            id: "Tag2",
+            name: "Tag2",
             color: "red",
         },
     ];
 
     beforeEach(() => {
         onChangeHandler = jest.fn();
-        ref = React.createRef<TagsInput>();
         wrapper = mount(
             <TagsInput
                 tags={originalTags}
-                onChange={onChangeHandler}
-                ref={ref}/>,
+                onChange={onChangeHandler}/>,
         );
     });
 
@@ -36,15 +32,14 @@ describe("Tags Input Component", () => {
         const stateTags = wrapper.state().tags;
         expect(stateTags).toHaveLength(originalTags.length);
         for (let i = 0; i < stateTags.length; i++) {
-            expect(stateTags[i].id).toEqual(originalTags[i].id);
+            expect(stateTags[i].id).toEqual(originalTags[i].name);
             expect(stateTags[i].color).toEqual(originalTags[i].color);
-            expect(stateTags.text).not.toBeNull();
+            expect(stateTags[i].text).not.toBeNull();
         }
     });
 
-    it("renders appropriate color boxes", () => {
-        expect(wrapper.find("div.inline-block.box.blue")).toHaveLength(1);
-        expect(wrapper.find("div.inline-block.box.red")).toHaveLength(1);
+    it("renders appropriate number of color boxes", () => {
+        expect(wrapper.find("div.inline-block.tag_color_box")).toHaveLength(2);
     });
 
     it("one text input field is available", () => {
@@ -62,42 +57,49 @@ describe("Tags Input Component", () => {
     });
 
     it("remove a tag", () => {
-        wrapper.find("a.ReactTags__remove").last().simulate("click");
+        expect(wrapper.state().tags).toHaveLength(2);
+        wrapper.find("a.ReactTags__remove")
+            .last().simulate("click");
         expect(onChangeHandler).toBeCalled();
         expect(wrapper.state().tags).toHaveLength(1);
-        expect(wrapper.state().tags[0].id).toEqual(originalTags[0].id);
+        expect(wrapper.state().tags[0].id).toEqual(originalTags[0].name);
         expect(wrapper.state().tags[0].color).toEqual(originalTags[0].color);
     });
 
     it("double click tag opens modal", () => {
         expect(wrapper.state().showModal).toBeFalsy();
         wrapper.find("div.inline-block.tagtext")
-            .first().simulate("dblclick", { target: { innerText: originalTags[0].id}});
+            .first()
+            .simulate("dblclick", { target: { innerText: originalTags[0].name}});
         expect(wrapper.state().showModal).toBeTruthy();
     });
 
     it("double click tag sets selected tag", () => {
         wrapper.find("div.inline-block.tagtext")
-            .first().simulate("dblclick", { target: { innerText: originalTags[0].id}});
-        expect(wrapper.state().selectedTag.id).toEqual(originalTags[0].id);
+            .first()
+            .simulate("dblclick", { target: { innerText: originalTags[0].name}});
+        expect(wrapper.state().selectedTag.id).toEqual(originalTags[0].name);
         expect(wrapper.state().selectedTag.color).toEqual(originalTags[0].color);
-        wrapper.find("button").last().simulate("click");
-        expect(wrapper.state().showModal).toBeFalsy();
-        expect(onChangeHandler).toBeCalled();
     });
 
     it("clicking 'ok' in modal closes and calls onChangeHandler", () => {
         wrapper.find("div.inline-block.tagtext")
-            .first().simulate("dblclick", { target: { innerText: originalTags[0].id}});
-        wrapper.find("button").last().simulate("click");
+            .first()
+            .simulate("dblclick", { target: { innerText: originalTags[0].name}});
+        wrapper.find("button")
+            .last()
+            .simulate("click");
         expect(wrapper.state().showModal).toBeFalsy();
         expect(onChangeHandler).toBeCalled();
     });
 
     it("clicking 'cancel' in modal closes and does not call onChangeHandler", () => {
         wrapper.find("div.inline-block.tagtext")
-            .first().simulate("dblclick", { target: { innerText: originalTags[0].id}});
-        wrapper.find("button").first().simulate("click");
+            .first()
+            .simulate("dblclick", { target: { innerText: originalTags[0].name}});
+        wrapper.find("button")
+            .first()
+            .simulate("click");
         expect(wrapper.state().showModal).toBeFalsy();
         expect(onChangeHandler).not.toBeCalled();
     });

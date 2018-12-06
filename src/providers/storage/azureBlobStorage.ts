@@ -1,25 +1,22 @@
 import { IStorageProvider } from "./storageProvider";
 import AzureStorageBlob from "../../vendor/azurestoragejs/azure-storage.blob.js";
+import { IAsset } from "../../models/applicationState";
+import { AssetService } from "../../services/assetService";
 
 export interface IAzureCloudStorageOptions {
     connectionString: string;
+    containerName: string;
+    createContainer: boolean;
 }
 
 export class AzureCloudStorageService implements IStorageProvider {
-    public connectionString = null;
-
     constructor(private options?: IAzureCloudStorageOptions) {
-        this.connectionString = options.connectionString;
-    }
-
-    public getService() {
-        return AzureStorageBlob.createBlobService(this.connectionString);
     }
 
     public readText(path: string) {
         return new Promise<string>((resolve, reject) => {
             this.getService().getBlobToText(
-                this.getContainerName(path),
+                this.options.containerName,
                 this.getFileName(path),
                 (err, data) => {
                     if (err) {
@@ -37,10 +34,13 @@ export class AzureCloudStorageService implements IStorageProvider {
         return Buffer.from(text);
     }
 
-    public writeText(path: string, contents: string | Buffer) {
+    public async writeText(path: string, contents: string | Buffer) {
+        if (this.options.createContainer) {
+            await this.createContainer(this.options.containerName);
+        }
         return new Promise<void>((resolve, reject) => {
             this.getService().createBlockBlobFromText(
-                this.getContainerName(path),
+                this.options.containerName,
                 this.getFileName(path),
                 contents,
                 (err, data) => {
@@ -61,7 +61,7 @@ export class AzureCloudStorageService implements IStorageProvider {
     public deleteFile(path: string) {
         return new Promise<void>((resolve, reject) => {
             this.getService().deleteBlobIfExists(
-                this.getContainerName(path),
+                this.options.containerName,
                 this.getFileName(path),
                 (err, data) => {
                     if (err) {
@@ -77,7 +77,7 @@ export class AzureCloudStorageService implements IStorageProvider {
     public listFiles(path: string) {
         return new Promise<string[]>((resolve, reject) => {
             this.getService().listBlobsSegmented(
-                this.getContainerName(path),
+                this.options.containerName,
                 (err, results) => {
                     if (err) {
                         reject(err);
@@ -105,7 +105,7 @@ export class AzureCloudStorageService implements IStorageProvider {
         return new Promise<void>((resolve, reject) => {
             const service = this.getService();
             service.createContainerIfNotExists(
-                this.getContainerName(path),
+                this.options.containerName,
                 { publicAccessLevel: "blob" },
                 (err) => {
                     if (err) {
@@ -121,7 +121,7 @@ export class AzureCloudStorageService implements IStorageProvider {
     public deleteContainer(path: string) {
         return new Promise<void>((resolve, reject) => {
             this.getService().deleteContainer(
-                this.getContainerName(path),
+                this.options.containerName,
                 (err) => {
                     if (err) {
                         reject(err);
@@ -133,8 +133,20 @@ export class AzureCloudStorageService implements IStorageProvider {
         });
     }
 
+    public async getAssets(path?: string): Promise<IAsset[]> {
+        if (this.options.containerName) {
+            path = path ? [this.options.containerName, path].join("/") : this.options.containerName;
+        }
+        const files = await this.listFiles(path);
+        return files.map((blobPath) => AssetService.createAssetFromFilePath(blobPath));
+    }
+
+    private getService() {
+        return AzureStorageBlob.createBlobService(this.options.connectionString);
+    }
+
     private getContainerName(path: string) {
-        return path.substring(0, path.indexOf("/"));
+        return path.indexOf("/") > -1 ? path.substring(0, path.indexOf("/")) : path;
     }
 
     private getFileName(path: string) {

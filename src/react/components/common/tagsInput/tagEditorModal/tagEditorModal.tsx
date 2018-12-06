@@ -2,6 +2,8 @@ import React from "react";
 import ReactModal from "react-modal";
 import formSchema from "./tagEditorModal.json";
 import Form from "react-jsonschema-form";
+import "./tagEditorModal.scss";
+import { ITag } from "../../../../../models/applicationState";
 
 const customStyles = {
     content : {
@@ -11,18 +13,19 @@ const customStyles = {
       bottom                : "auto",
       marginRight           : "-50%",
       transform             : "translate(-50%, -50%)",
+      zIndex                : 1,
     },
   };
 
 interface ITagEditorModalProps {
-    tag: any;
+    tag: ITag;
     showModal: boolean;
     onOk: (value) => void;
     onCancel: (value) => void;
 }
 
 interface ITagEditorModalState {
-    tag: any;
+    tag: ITag;
     formData: any;
     isOpen: boolean;
 }
@@ -51,7 +54,7 @@ export class TagEditorModal extends React.Component<ITagEditorModalProps, ITagEd
     public handleFormChange(results) {
         this.setState({
             tag: {
-                id: results.formData.name,
+                name: results.formData.name,
                 color: results.formData.color,
             },
         });
@@ -74,12 +77,11 @@ export class TagEditorModal extends React.Component<ITagEditorModalProps, ITagEd
                         schema={formSchema}
                         onChange={this.handleFormChange}
                         formData={{
-                            name: this.state.tag.id,
-                            color: this.state.tag.color,
+                            name: (this.state.tag) ? this.state.tag.name : null,
+                            color: (this.state.tag) ? this.state.tag.color : null,
                         }}>
                         <button type="button" onClick={this.props.onCancel}>Close</button>
                         <button type="button" onClick={this.handleOk}>OK</button>
-                        {/*Need a close modal button and ok button */}
                     </Form>
                 </ReactModal>
             </div>
