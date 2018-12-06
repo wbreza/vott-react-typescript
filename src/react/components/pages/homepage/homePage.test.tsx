@@ -5,6 +5,7 @@ import initialState from "../../../../redux/store/initialState";
 import HomePage from "./homePage";
 import { BrowserRouter as Router } from "react-router-dom";
 import { mount } from "enzyme";
+import { Link } from "react-router-dom";
 import { IApplicationState, IProject, ITag, IExportFormat, IConnection } from "../../../../models/applicationState";
 import IProjectActions, * as projectActions from "../../../../redux/actions/projectActions";
 
@@ -14,6 +15,7 @@ describe("Connection Picker Component", () => {
     let wrapper: any = null;
     let recentProjects: IProject[] = null;
     const executor = () => { return; };
+    const loadSelectedProject = () => { return; };
     const actions: IProjectActions = null;
     let source: IConnection;
     const tags: ITag[] = [];
@@ -69,11 +71,9 @@ describe("Connection Picker Component", () => {
         );
     });
 
-    // it("renders", () => {
-    //     const newProject = wrapper.find("h6").at(0).props();
-    //     console.log(newProject);
-    //     expect((newProject.homePageprop).to.equal("New Project"));
-    // });
+    it("should render a New Project Link", () => {
+        expect(wrapper.find(Link).props().to).toBe("/projects/create");
+    });
 
     it("should call upload when 'Open Project' is clicked", () => {
         const spy = jest.spyOn(wrapper, "update");
@@ -83,28 +83,11 @@ describe("Connection Picker Component", () => {
         expect(spy).toBeCalled();
     });
 
-    // it("renders a 'Open Project' action", () => {
-    //     const firstOption = wrapper.find("option");
-    //     expect(firstOption.text()).toEqual("Open Project");
-    // });
-
     // it("renders list of recent project", () => {
     //     expect(wrapper).not.toBeNull();
     //     const optionElements = wrapper.find("option");
     //     expect(wrapper.prop("value")).not.toBeDefined();
     // });
-
-    // it("uploads a file properly", () => {
-    // });
-
-    // it("throws an error when a file is not uploaded properly", () => {
-    // });
-
-    // it("throws an error when a file is not uploaded properly", () => {
-    // });
-
-    // it("deletes a project when deleteProject is called", () => {
-    //     const connectionId = "2";
 
     //     wrapper.find("select").simulate("change", { target: { value: connectionId } });
     //     expect(onChangeHandler).toBeCalledWith(connectionId);
