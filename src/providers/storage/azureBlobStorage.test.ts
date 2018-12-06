@@ -26,7 +26,7 @@ describe("Azure blob functions", () => {
     const options: IAzureCloudStorageOptions = {
         connectionString: "fake connection string",
         containerName: "container",
-        createContainer: false
+        createContainer: false,
     };
 
     registerProviders();

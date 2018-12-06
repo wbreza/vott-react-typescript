@@ -27,7 +27,6 @@ interface ITagsInputState {
     showModal: boolean;
 }
 
-
 const KeyCodes = {
     comma: 188,
     enter: 13,
