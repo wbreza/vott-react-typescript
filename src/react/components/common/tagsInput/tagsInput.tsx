@@ -40,7 +40,7 @@ export default class TagsInput extends React.Component<ITagsInputProps, ITagsInp
     constructor(props) {
         super(props);
         this.state = {
-            tags: (props.tags) ? props.tags.map((element: ITag) => this.toReactTag(element)) : [{id: null}],
+            tags: (props.tags) ? props.tags.map((element: ITag) => this.toReactTag(element)) : [],
             currentTagColorIndex: randomIntInRange(0, tagColors.length),
             selectedTag: null,
             showModal: false,
