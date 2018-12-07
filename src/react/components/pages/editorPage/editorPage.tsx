@@ -8,6 +8,7 @@ import { RouteComponentProps } from "react-router-dom";
 import HtmlFileReader from "../../../../common/htmlFileReader";
 import "./editorPage.scss";
 import AssetPreview from "./assetPreview";
+import Canvas from "./canvas";
 
 interface IEditorPageProps extends RouteComponentProps, React.Props<IEditorPageProps> {
     project: IProject;
@@ -114,6 +115,7 @@ export default class EditorPage extends React.Component<IEditorPageProps, IEdito
                     </div>
                     <div className="editor-page-content-footer">
                         Footer
+                        <Canvas asset={selectedAsset}></Canvas>
                     </div>
                 </div>
             </div>
