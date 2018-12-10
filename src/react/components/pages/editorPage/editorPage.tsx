@@ -9,6 +9,7 @@ import HtmlFileReader from "../../../../common/htmlFileReader";
 import "./editorPage.scss";
 import AssetPreview from "./assetPreview";
 import Canvas from "./canvas";
+import CanvasContainer from "./canvasContainer";
 
 interface IEditorPageProps extends RouteComponentProps, React.Props<IEditorPageProps> {
     project: IProject;
@@ -103,19 +104,19 @@ export default class EditorPage extends React.Component<IEditorPageProps, IEdito
                     <div className="editor-page-content-body">
                         {selectedAsset &&
                             <div className="canvas-container">
-                                <AssetPreview asset={selectedAsset} />
+                                {/* <AssetPreview asset={selectedAsset} />
                                 {selectedAsset.size &&
                                     <div>
                                         Width: {selectedAsset.size.width}
                                         Height: {selectedAsset.size.height}
                                     </div>
-                                }
+                                } */}
+                                <Canvas selectedAsset={this.state.selectedAsset}/>
                             </div>
                         }
                     </div>
                     <div className="editor-page-content-footer">
                         Footer
-                        <Canvas asset={selectedAsset}></Canvas>
                     </div>
                 </div>
             </div>
