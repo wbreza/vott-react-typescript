@@ -9,7 +9,6 @@ import HtmlFileReader from "../../../../common/htmlFileReader";
 import "./editorPage.scss";
 import AssetPreview from "./assetPreview";
 import Canvas from "./canvas";
-import CanvasContainer from "./canvasContainer";
 
 interface IEditorPageProps extends RouteComponentProps, React.Props<IEditorPageProps> {
     project: IProject;
