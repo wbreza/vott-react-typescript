@@ -1,5 +1,5 @@
 import React from "react";
-import Footer from "./footer";
+import EditorFooter from "./editorFooter";
 import {mount} from "enzyme";
 import TagColors from "../../common/tagsInput/tagColors.json";
 
@@ -21,19 +21,25 @@ describe("Footer Component", () => {
     beforeEach(() => {
         onChangeHandler = jest.fn();
         wrapper = mount(
-            <Footer
+            <EditorFooter
                 tags={originalTags}
-                onChange={onChangeHandler}/>,
+                onTagsChanged={onChangeHandler}/>,
         );
     });
 
     it("tags are initialized correctly", () => {
         const stateTags = wrapper.state().tags;
-        expect(stateTags).toHaveLength(originalTags.length);
-        for (let i = 0; i < stateTags.length; i++) {
-            expect(stateTags[i].name).toEqual(originalTags[i].name);
-            expect(stateTags[i].color).toEqual(originalTags[i].color);
-        }
+        expect(stateTags).toEqual(originalTags);
+    });
+
+    it("tags are empty", () => {
+        const emptyWrapper = mount(
+            <EditorFooter
+                tags={[]}
+                onTagsChanged={onChangeHandler}/>,
+        );
+        const stateTags = emptyWrapper.state().tags;
+        expect(stateTags).toEqual([]);
     });
 
     it("create a new tag from text box", () => {

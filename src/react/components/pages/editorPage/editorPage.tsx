@@ -8,7 +8,7 @@ import { RouteComponentProps } from "react-router-dom";
 import HtmlFileReader from "../../../../common/htmlFileReader";
 import "./editorPage.scss";
 import AssetPreview from "./assetPreview";
-import Footer from "./footer";
+import EditorFooter from "./editorFooter";
 
 interface IEditorPageProps extends RouteComponentProps, React.Props<IEditorPageProps> {
     project: IProject;
@@ -115,9 +115,9 @@ export default class EditorPage extends React.Component<IEditorPageProps, IEdito
                         }
                     </div>
                     <div>
-                        <Footer
+                        <EditorFooter
                             tags={this.props.project.tags}
-                            onChange={this.onFooterChange} />
+                            onTagsChanged={this.onFooterChange} />
                     </div>
                 </div>
             </div>

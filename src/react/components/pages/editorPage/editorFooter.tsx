@@ -2,22 +2,22 @@ import React from "react";
 import TagsInput from "../../common/tagsInput/tagsInput";
 import { ITag } from "../../../../models/applicationState";
 
-interface IFooterProps {
+export interface IEditorFooterProps {
     tags: ITag[];
-    onChange: (value) => void;
+    onTagsChanged: (value) => void;
 }
 
-interface IFooterState {
+export interface IEditorFooterState {
     tags: ITag[];
 }
 
-export default class Footer extends React.Component<IFooterProps, IFooterState> {
+export default class EditorFooter extends React.Component<IEditorFooterProps, IEditorFooterState> {
     constructor(props) {
         super(props);
         this.state = {
             tags: props.tags,
         };
-        this.onTagsChange = this.onTagsChange.bind(this);
+        this.onTagsChanged = this.onTagsChanged.bind(this);
     }
 
     public render() {
@@ -25,15 +25,15 @@ export default class Footer extends React.Component<IFooterProps, IFooterState> 
             <div>
                 <TagsInput
                     tags={this.state.tags}
-                    onChange={this.onTagsChange}
+                    onChange={this.onTagsChanged}
                 />
             </div>
         );
     }
 
-    private onTagsChange(tags) {
+    private onTagsChanged(tags) {
         this.setState({
             tags: JSON.parse(tags),
-        }, () => this.props.onChange(this.state));
+        }, () => this.props.onTagsChanged(this.state));
     }
 }
