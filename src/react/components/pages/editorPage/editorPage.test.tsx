@@ -20,12 +20,15 @@ describe("Editor Page Component", () => {
     let wrapper: any;
     let connection: IConnection;
     let format: IExportFormat;
-    let project: IProject = null;
+    let testProject: IProject = null;
+    let assets: IAsset[];
+    let state: any;
     let projectActions: IProjectActions;
+    let testAsset: IAsset;
     const executor = () => { return; };
     const history: any = null;
     const location: any = null;
-    const match: any = null;
+    let match: any;
     let onChangeHandler: (value: any) => void;
 
     beforeEach(() => {
@@ -42,7 +45,7 @@ describe("Editor Page Component", () => {
             providerType: "provider",
             providerOptions: {},
         };
-        project = {
+        testProject = {
             id: "1",
             name: "project1",
             description: "test project",
@@ -64,6 +67,29 @@ describe("Editor Page Component", () => {
             loadAssets: () => new Promise<IAsset[]>(executor),
             saveAsset: (asset: IAsset) => asset,
         };
+        testAsset = {
+            id: "1",
+            type: 0,
+            name: "asset",
+            path: "path",
+            size: {
+                width: 1,
+                height: 1.
+            },
+        }
+        assets = [testAsset];
+        state = {
+            testProject,
+            assets,
+        };
+        match = {
+            params: {
+                projectId: 1,
+            },
+            isExact: true,
+            path: "",
+            url: "",
+        };
 
         onChangeHandler = jest.fn();
 
@@ -71,7 +97,7 @@ describe("Editor Page Component", () => {
             <Provider store={store}>
                 <Router>
                     <EditorPage
-                        project={project}
+                        project={testProject}
                         projectActions={projectActions}
                         history={history}
                         location={location}
@@ -82,8 +108,24 @@ describe("Editor Page Component", () => {
         );
     });
 
-    // it("renders an AssetPreview object", () => {
-    //     expect(wrapper.find(AssetPreview).exists()).toBeTruthy();
-    // });
+    it("renders an AssetPreview object", () => {
+        expect(wrapper.exists());
+        expect(wrapper.find("asset-list")).toBeTruthy();
+    });
+
+    // after you simulate the click you want to validate the state of the component
+    // and  ensure that selectedAsset has been correctly set on the state.
+    it("should call selectAsset when asset item is clicked", () => {
+        // const preview = wrapper.find("div.asset-item-image").find(AssetPreview);
+        const assetItem = wrapper.find("div.asset-list").at(0);
+        assetItem.simulate("click");
+        wrapper.setState({assets: testAsset, project: testProject})
+        wrapper.update();
+        // expect((wrapper.state()).not.toBeNull());
+        // expect((wrapper.state("assets").at(0)).toEqual(testAsset));
+        // expect(wrapper.find("div.asset-item")).toBeTruthy();
+        // const spy = jest.spyOn(EditorPage.prototype, "selectAsset");
+        // expect(spy).toBeCalled();
+    });
 
 });
